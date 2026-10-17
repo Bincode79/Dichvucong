@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Cổng Dịch vụ công quốc gia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', 'Nunito', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #c0392b 0%, #922b21 100%);
+            padding: 20px;
+        }
+        .login-container {
+            background: #fff;
+            border-radius: 20px;
+            padding: 48px 40px;
+            width: 420px;
+            max-width: 100%;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .logo-area { text-align: center; margin-bottom: 24px; }
+        .logo-area img { height: 52px; margin-bottom: 8px; }
+        .logo-area h1 { font-size: 17px; font-weight: 800; color: #c0392b; line-height: 1.4; }
+        .logo-area p { font-size: 13px; color: #888; margin-top: 3px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-weight: 600; font-size: 13.5px; color: #444; margin-bottom: 5px; }
+        input {
+            width: 100%; padding: 11px 14px;
+            border: 1.5px solid #ddd; border-radius: 10px;
+            font-size: 14.5px; font-family: inherit; outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fafafa;
+        }
+        input:focus { border-color: #c0392b; box-shadow: 0 0 0 3px rgba(192,57,43,0.12); background: #fff; }
+        .error-msg {
+            background: #fde8e8; border: 1px solid #f5c6cb; color: #c0392b;
+            padding: 10px 14px; border-radius: 8px; font-size: 13px;
+            margin-bottom: 16px; display: none;
+        }
+        .success-msg {
+            background: #d4edda; border: 1px solid #c3e6cb; color: #155724;
+            padding: 10px 14px; border-radius: 8px; font-size: 13px;
+            margin-bottom: 16px; display: none;
+        }
+        .btn-primary {
+            width: 100%; padding: 13px;
+            background: #c0392b; color: #fff; border: none; border-radius: 10px;
+            font-size: 16px; font-weight: 700; font-family: inherit;
+            cursor: pointer; transition: background 0.2s, transform 0.1s;
+        }
+        .btn-primary:hover { background: #a93226; }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; background: #999; transform: none; }
+        .footer-links { text-align: center; margin-top: 18px; font-size: 13px; color: #aaa; }
+        .footer-links a { color: #c0392b; text-decoration: none; font-weight: 600; cursor: pointer; }
+        .footer-links a:hover { text-decoration: underline; }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px; margin-bottom: 18px;
+            color: #888; text-decoration: none; font-size: 13px; font-weight: 500;
+        }
+        .back-link:hover { color: #c0392b; }
+        .password-wrapper { position: relative; }
+        .toggle-pass {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer;
+            color: #999; font-size: 16px; padding: 4px;
+        }
+        .toggle-pass:hover { color: #555; }
+        .hidden { display: none; }
+        .tab-bar {
+            display: flex; margin-bottom: 20px; border-bottom: 2px solid #f0f0f0;
+        }
+        .tab-btn {
+            flex: 1; padding: 10px; text-align: center; font-weight: 600;
+            font-size: 14px; color: #999; cursor: pointer; font-family: inherit;
+            background: none; border: none; border-bottom: 2px solid transparent;
+            margin-bottom: -2px; transition: all 0.2s;
+        }
+        .tab-btn.active { color: #c0392b; border-bottom-color: #c0392b; }
+        .tab-btn:hover { color: #c0392b; }
+        @media (max-width: 480px) {
+            .login-container { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <a href="/" class="back-link">← Quay lại trang chủ</a>
+
+        <div class="logo-area">
+            <img src="/p/home/img/header/quoc_huy.png" alt="Quốc huy" onerror="this.style.display='none'">
+            <h1 id="pageTitle">CỔNG DỊCH VỤ CÔNG QUỐC GIA</h1>
+            <p id="pageSubtitle">Đăng nhập hệ thống</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Đăng nhập</button>
+            <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Đăng ký</button>
+        </div>
+
+        <div id="errorMsg" class="error-msg"></div>
+        <div id="successMsg" class="success-msg"></div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Tên đăng nhập / Số điện thoại</label>
+                <input type="text" id="username" placeholder="Nhập tên đăng nhập hoặc số điện thoại" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Nhập mật khẩu" autocomplete="current-password">
+                    <button type="button" class="toggle-pass" onclick="togglePassword('password', 'toggleBtn')" id="toggleBtn">👁</button>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary" id="loginBtn">🔐 Đăng nhập</button>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="registerForm" class="hidden">
+            <div class="form-group">
+                <label for="regFullName">Họ và tên <span style="color:red">*</span></label>
+                <input type="text" id="regFullName" placeholder="Nhập họ và tên">
+            </div>
+            <div class="form-group">
+                <label for="regUsername">Tên đăng nhập <span style="color:red">*</span></label>
+                <input type="text" id="regUsername" placeholder="Nhập tên đăng nhập" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Mật khẩu <span style="color:red">*</span></label>
+                <div class="password-wrapper">
+                    <input type="password" id="regPassword" placeholder="Nhập mật khẩu">
+                    <button type="button" class="toggle-pass" onclick="togglePassword('regPassword', 'regToggleBtn')" id="regToggleBtn">👁</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" placeholder="Nhập email">
+            </div>
+            <div class="form-group">
+                <label for="regPhone">Số điện thoại</label>
+                <input type="tel" id="regPhone" placeholder="Nhập số điện thoại">
+            </div>
+            <button type="submit" class="btn-primary" id="registerBtn">📝 Đăng ký</button>
+        </form>
+
+        <div class="footer-links">
+            <p id="footerText">Bạn chưa có tài khoản? <a onclick="switchTab('register')">Đăng ký ngay</a></p>
+        </div>
+    </div>
+
+    <script>
+        var currentTab = 'login';
+
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('register') === '1') {
+            currentTab = 'register';
+        }
+        var redirectAfter = params.get('redirect') || '';
+
+        function togglePassword(inputId, btnId) {
+            var p = document.getElementById(inputId);
+            var btn = document.getElementById(btnId);
+            if (p.type === 'password') {
+                p.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                p.type = 'password';
+                btn.textContent = '👁';
+            }
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+            document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+            document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+            if (tab === 'login') {
+                document.getElementById('pageSubtitle').textContent = 'Đăng nhập hệ thống';
+                document.getElementById('footerText').innerHTML = 'Bạn chưa có tài khoản? <a onclick="switchTab(\'register\')">Đăng ký ngay</a>';
+            } else {
+                document.getElementById('pageSubtitle').textContent = 'Tạo tài khoản mới';
+                document.getElementById('footerText').innerHTML = 'Đã có tài khoản? <a onclick="switchTab(\'login\')">Đăng nhập</a>';
+            }
+            hideMsg('errorMsg');
+            hideMsg('successMsg');
+        }
+
+        function showMsg(id, msg) {
+            var el = document.getElementById(id);
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(function() { el.style.display = 'none'; }, 5000);
+        }
+
+        function hideMsg(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function setLoading(btnId, loading, loginText, loadingText) {
+            var btn = document.getElementById(btnId);
+            btn.disabled = loading;
+            btn.textContent = loading ? loadingText : loginText;
+        }
+
+        async function doLogin() {
+            var user = document.getElementById('username').value.trim();
+            var pass = document.getElementById('password').value;
+
+            if (!user || !pass) {
+                showMsg('errorMsg', '⚠️ Vui lòng nhập tên đăng nhập và mật khẩu');
+                return;
+            }
+
+            setLoading('loginBtn', true, '🔐 Đăng nhập', '⏳ Đang đăng nhập...');
+            try {
+                var res = await fetch('/api/user/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                var result = await res.json();
+                if (result.status === 'thành công') {
+                    var role = result.data.role || 'user';
+                    sessionStorage.setItem(role === 'admin' ? 'adminLoggedIn' : 'userLoggedIn', '1');
+                    sessionStorage.setItem(role === 'admin' ? 'adminUser' : 'userName', result.data.fullName || user);
+                    sessionStorage.setItem('userData', JSON.stringify(result.data));
+                    if (result.data.token) {
+                        sessionStorage.setItem('adminToken', result.data.token);
+                        sessionStorage.setItem('userToken', result.data.token);
+                        localStorage.setItem('userToken', result.data.token);
+                    }
+                    if (role === 'admin') {
+                        window.location.href = '/admin.html';
+                    } else {
+                        showMsg('successMsg', '✅ Đăng nhập thành công!');
+                        var target = redirectAfter || '/';
+                        setTimeout(function() { window.location.href = target; }, 800);
+                    }
+                } else {
+                    showMsg('errorMsg', '⚠️ ' + (result.error || 'Sai tên đăng nhập hoặc mật khẩu'));
+                }
+            } catch (e) {
+                showMsg('errorMsg', '⚠️ Lỗi kết nối: ' + e.message);
+            } finally {
+                setLoading('loginBtn', false, '🔐 Đăng nhập', '');
+            }
+        }
+
+        async function doRegister() {
+            var fullName = document.getElementById('regFullName').value.trim();
+            var username = document.getElementById('regUsername').value.trim();
+            var password = document.getElementById('regPassword').value;
+            var email = document.getElementById('regEmail').value.trim();
+            var phone = document.getElementById('regPhone').value.trim();
+
+            if (!fullName || !username || !password) {
+                showMsg('errorMsg', '⚠️ Vui lòng điền họ tên, tên đăng nhập và mật khẩu');
+                return;
+            }
+            if (password.length < 6) {
+                showMsg('errorMsg', '⚠️ Mật khẩu phải có ít nhất 6 ký tự');
+                return;
+            }
+
+            setLoading('registerBtn', true, '📝 Đăng ký', '⏳ Đang xử lý...');
+            try {
+                var res = await fetch('/api/user/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username, password: password, fullName: fullName, email: email, phone: phone })
+                });
+                var result = await res.json();
+                if (result.status === 'thành công') {
+                    showMsg('successMsg', '✅ ' + result.message);
+                    document.getElementById('regFullName').value = '';
+                    document.getElementById('regUsername').value = '';
+                    document.getElementById('regPassword').value = '';
+                    document.getElementById('regEmail').value = '';
+                    document.getElementById('regPhone').value = '';
+                    setTimeout(function() {
+                        document.getElementById('username').value = username;
+                        switchTab('login');
+                    }, 1200);
+                } else {
+                    showMsg('errorMsg', '⚠️ ' + (result.error || 'Đăng ký thất bại'));
+                }
+            } catch (e) {
+                showMsg('errorMsg', '⚠️ Lỗi kết nối: ' + e.message);
+            } finally {
+                setLoading('registerBtn', false, '📝 Đăng ký', '');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            doLogin();
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            doRegister();
+        });
+
+        document.getElementById('password').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') doLogin();
+        });
+
+        if (currentTab === 'register') {
+            switchTab('register');
+        }
+    </script>
+</body>
+</html>

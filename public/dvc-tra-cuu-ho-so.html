@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu hồ sơ - Cổng Dịch vụ công quốc gia</title>
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); padding: 32px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #CE7A58; padding: 16px 0 12px; border-bottom: 2px solid #CE7A58; margin-bottom: 20px; letter-spacing: 0.5px; }
+        input, select { border: 1.5px solid #d1d5db; padding: 10px 14px; width: 100%; border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; box-sizing: border-box; }
+        input:focus, select:focus { border-color: #CE7A58; box-shadow: 0 0 0 3px rgba(206,122,88,0.15); }
+        .btn-search { background: #CE7A58; color: #fff; border: none; border-radius: 8px; padding: 12px 32px; cursor: pointer; font-weight: 700; font-size: 15px; transition: all 0.2s; }
+        .btn-search:hover { background: #B8694A; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(206,122,88,0.4); }
+        .result-item { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-top: 12px; transition: all 0.2s; }
+        .result-item:hover { border-color: #CE7A58; box-shadow: 0 2px 8px rgba(206,122,88,0.1); }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+        @media (max-width: 768px) { .card { padding: 16px; } }
+    </style>
+</head>
+<body>
+<div class="header-bar bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex items-center justify-between min-h-[64px]">
+            <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e2f41" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span class="text-sm font-medium text-gray-600">Quay lại</span>
+            </div>
+            <span class="font-bold text-sm md:text-base text-[#1e2f41]">CỔNG DỊCH VỤ CÔNG QUỐC GIA</span>
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-extrabold text-[#1e2f41] mb-2">TRA CỨU HỒ SƠ</h1>
+    <p class="text-sm text-gray-500 mb-6">Nhập thông tin để tra cứu tình trạng xử lý hồ sơ của bạn</p>
+
+    <div class="card mb-8">
+        <div class="section-title">🔍 THÔNG TIN TRA CỨU</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            <div>
+                <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Mã hồ sơ</label>
+                <input type="text" id="maHoSo" placeholder="Nhập mã hồ sơ">
+            </div>
+            <div>
+                <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Số CMND/CCCD</label>
+                <input type="text" id="soCCCD" placeholder="Nhập số CMND/CCCD">
+            </div>
+        </div>
+        <div class="flex justify-center md:justify-start">
+            <button class="btn-search" onclick="searchRecord()">Tra cứu</button>
+        </div>
+    </div>
+
+    <div id="searchResult" class="card" style="display:none;">
+        <div class="section-title">📋 KẾT QUẢ TRA CỨU</div>
+        <div id="resultList"></div>
+    </div>
+</div>
+
+<script>
+function goHome() { window.location.href = '/'; }
+
+function statusText(status) {
+    const map = { pending: 'Chờ xử lý', processing: 'Đang xử lý', done: 'Hoàn thành', rejected: 'Từ chối' };
+    return map[status] || status;
+}
+
+function statusClass(status) {
+    const map = { pending: 'badge-warning', processing: 'badge-warning', done: 'badge-success', rejected: 'badge-danger' };
+    return map[status] || 'badge-warning';
+}
+
+function fmtDate(str) {
+    if (!str) return '—';
+    const d = new Date(str);
+    if (isNaN(d)) return str;
+    return d.toLocaleDateString('vi-VN');
+}
+
+function esc(str) {
+    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function searchRecord() {
+    const maHoSo = document.getElementById('maHoSo').value.trim();
+    const soCCCD = document.getElementById('soCCCD').value.trim();
+    if (!maHoSo && !soCCCD) {
+        alert('Vui lòng nhập ít nhất một thông tin tra cứu');
+        return;
+    }
+    const resultDiv = document.getElementById('searchResult');
+    const listDiv = document.getElementById('resultList');
+    resultDiv.style.display = 'block';
+    listDiv.innerHTML = '<div class="text-center py-8 text-gray-500">🔍 Đang tra cứu...</div>';
+    try {
+        const params = new URLSearchParams();
+        if (maHoSo) params.set('maHoSo', maHoSo);
+        if (soCCCD) params.set('soCCCD', soCCCD);
+        const res = await fetch('/api/search/records?' + params.toString());
+        const json = await res.json();
+        if (json.status !== 'thành công') {
+            listDiv.innerHTML = `<div class="result-item"><p class="text-red-500">${esc(json.error)}</p></div>`;
+            return;
+        }
+        const data = json.data;
+        if (!data || data.length === 0) {
+            listDiv.innerHTML = '<div class="result-item text-center py-4 text-gray-500">📭 Không tìm thấy hồ sơ nào</div>';
+            return;
+        }
+        listDiv.innerHTML = data.map(p => `
+            <div class="result-item" onclick="viewDetail('${p._source}','${p.id}')" style="cursor:pointer;">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="font-bold text-[#1e2f41]">${esc(p._type)}</p>
+                        <p class="text-sm text-gray-500 mt-1">Người nộp: ${esc(p.fullName || p.applicantName || '—')}</p>
+                        <p class="text-sm text-gray-500">Mã hồ sơ: <code style="background:#f5f5f5;padding:1px 6px;border-radius:4px;">${esc(p.id)}</code></p>
+                        <p class="text-sm text-gray-500">Ngày nộp: ${fmtDate(p.createdAt)}</p>
+                        ${p.adminNote ? `<p class="text-sm text-gray-400 italic">Ghi chú: ${esc(p.adminNote)}</p>` : ''}
+                    </div>
+                    <span class="badge ${statusClass(p.status)}">${statusText(p.status)}</span>
+                </div>
+            </div>
+        `).join('');
+    } catch (e) {
+        listDiv.innerHTML = `<div class="result-item"><p class="text-red-500">Lỗi kết nối: ${esc(e.message)}</p></div>`;
+    }
+}
+
+function viewDetail(source, id) {
+    window.location.href = '/tra-cuu-chi-tiet.html?source=' + encodeURIComponent(source) + '&id=' + encodeURIComponent(id);
+}
+</script>
+</body>
+</html>

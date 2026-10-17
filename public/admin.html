@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Quản Lý Hồ Sơ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <link rel="stylesheet" href="admin.css?v=20260705.1">
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen" class="login-wrapper">
+    <div class="login-card">
+        <div class="login-logo">
+            <svg class="emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="g" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#CE7A58"/><stop offset="100%" style="stop-color:#B8603A"/></linearGradient></defs>
+                <circle cx="50" cy="50" r="48" fill="url(#g)" stroke="#FFD700" stroke-width="2"/>
+                <path d="M 50 12 L 56 35 L 80 35 L 60 48 L 68 72 L 50 58 L 32 72 L 40 48 L 20 35 L 44 35 Z" fill="#FFD700"/>
+                <rect x="22" y="80" width="56" height="14" fill="#CE7A58" rx="2" stroke="#FFD700" stroke-width="0.5"/>
+                <text x="50" y="90" font-size="7.5" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-family="Arial">VIỆT NAM</text>
+            </svg>
+            <h2>HỆ THỐNG QUẢN LÝ<br>HỒ SƠ HÀNH CHÍNH</h2>
+            <p>Cổng Dịch Vụ Công Quốc Gia</p>
+        </div>
+        <div class="login-form">
+            <div id="loginError" class="login-error">⚠️ Tên đăng nhập hoặc mật khẩu không đúng!</div>
+            <form id="loginForm" autocomplete="on">
+                <div class="form-group">
+                    <label>Tên đăng nhập</label>
+                    <input type="text" id="loginUser" placeholder="Nhập tên đăng nhập" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="loginPass" placeholder="Nhập mật khẩu" autocomplete="current-password">
+                </div>
+                <button type="button" class="btn-login-submit" id="loginSubmitBtn" onclick="doLogin()">Đăng nhập</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===== ADMIN DASHBOARD ===== -->
+<div id="adminApp" class="admin-layout" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">⚙ ADMIN</div>
+            <div class="brand-sub">Quản lý hồ sơ</div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="active" onclick="showTab('dashboard',this)">
+                <span class="nav-icon">📊</span><span>Tổng quan</span>
+            </a>
+            <a href="#" onclick="showTab('profiles',this)">
+                <span class="nav-icon">📁</span><span>Danh sách hồ sơ</span>
+            </a>
+            <a href="#" onclick="showTab('qrmanager',this)">
+                <span class="nav-icon">📲</span><span>Quản lý QR thanh toán</span>
+            </a>
+            <a href="#" onclick="showTab('dvc',this)">
+                <span class="nav-icon">📋</span><span>DV công trực tuyến</span>
+            </a>
+            <a href="#" onclick="showTab('nhadat',this)">
+                <span class="nav-icon">🏠</span><span>Thủ tục nhà đất</span>
+            </a>
+            <a href="#" onclick="showTab('users',this)">
+                <span class="nav-icon">👥</span><span>Quản lý người dùng</span>
+            </a>
+            <a href="#" onclick="showTab('chat',this)">
+                <span class="nav-icon"><i class="fa fa-commenting"></i></span><span>Hỗ trợ chat</span>
+            </a>
+            <a href="index.html" target="_blank">
+                <span class="nav-icon">🌐</span><span>Xem trang chủ</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" onclick="doLogout()">
+                <span>🚪</span><span>Đăng xuất</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">☰</button>
+                <h1 id="pageTitle">Tổng quan hệ thống</h1>
+            </div>
+            <div class="top-bar-right">
+                <span>👤 <strong id="adminName">admin</strong></span>
+                <span class="admin-badge">ADMIN</span>
+            </div>
+        </div>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+        <div class="content-area">
+
+            <!-- TAB: DASHBOARD -->
+            <div id="tab-dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="stat-label">Tổng hồ sơ</div>
+                        <div class="stat-value" id="statTotal">0</div>
+                        <div class="stat-sub">Tất cả hồ sơ đã nhận</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <div class="stat-label">Chờ xử lý</div>
+                        <div class="stat-value" id="statPending">0</div>
+                        <div class="stat-sub">Đang chờ duyệt</div>
+                    </div>
+                    <div class="stat-card done">
+                        <div class="stat-label">Hoàn thành</div>
+                        <div class="stat-value" id="statDone">0</div>
+                        <div class="stat-sub">Đã xử lý xong</div>
+                    </div>
+                    <div class="stat-card rejected">
+                        <div class="stat-label">Từ chối</div>
+                        <div class="stat-value" id="statRejected">0</div>
+                        <div class="stat-sub">Hồ sơ bị từ chối</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="charts-row">
+                    <div class="section-card chart-card">
+                        <div class="section-header">
+                            <div class="section-title">📊 Trạng thái hồ sơ</div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="statusChart" width="400" height="240"></canvas>
+                        </div>
+                    </div>
+                    <div class="section-card chart-card">
+                        <div class="section-header">
+                            <div class="section-title">📈 Xu hướng đăng ký (14 ngày)</div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="trendChart" width="400" height="240"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title">📋 Hồ sơ mới nhất</div>
+                        <button class="btn btn-primary btn-sm" onclick="showTab('profiles', document.querySelector('.sidebar-nav a:nth-child(2)'))">Xem tất cả →</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mã hồ sơ</th>
+                                    <th>Họ và tên</th>
+                                    <th>CCCD/CMND</th>
+                                    <th>Điện thoại</th>
+                                    <th>Loại hồ sơ</th>
+                                    <th>Ngày nộp</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardTable">
+                                <tr><td colspan="7" class="empty-table"><div class="empty-icon">📭</div><p>Chưa có hồ sơ nào</p></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: PROFILES -->
+            <div id="tab-profiles" style="display:none;">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title">📁 Danh sách hồ sơ</div>
+                        <div class="section-actions">
+                            <button class="btn btn-outline btn-sm" onclick="exportData()">⬇ Xuất dữ liệu</button>
+                            <button class="btn btn-danger btn-sm" onclick="clearAllProfiles()">🗑 Xóa tất cả</button>
+                        </div>
+                    </div>
+                    <div class="filter-bar">
+                        <input type="text" class="filter-input" id="filterSearch" placeholder="🔍 Tìm tên, CCCD, mã hồ sơ..." oninput="applyFilters()">
+                        <select class="filter-select" id="filterStatus" onchange="applyFilters()">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="pending">Chờ xử lý</option>
+                            <option value="processing">Đang xử lý</option>
+                            <option value="done">Hoàn thành</option>
+                            <option value="rejected">Từ chối</option>
+                        </select>
+                        <select class="filter-select" id="filterType" onchange="applyFilters()">
+                            <option value="">Tất cả loại</option>
+                            <option value="main">Thủ tục hành chính</option>
+                            <option value="nhaDat">Thủ tục nhà đất</option>
+                        </select>
+                        <input type="date" class="filter-input" id="filterDate" style="min-width:150px;" onchange="applyFilters()" title="Lọc theo ngày nộp">
+                        <button class="btn-filter-reset" onclick="resetFilters()">✕ Đặt lại</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Mã hồ sơ</th>
+                                    <th>Họ và tên</th>
+                                    <th>CCCD/CMND</th>
+                                    <th>Điện thoại</th>
+                                    <th>Loại hồ sơ</th>
+                                    <th>Ngày nộp</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="profilesTable">
+                                <tr><td colspan="9" class="empty-table"><div class="empty-icon">📭</div><p>Chưa có hồ sơ nào</p></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+
+            <!-- TAB: QR MANAGER -->
+            <div id="tab-qrmanager" style="display:none;">
+                <div class="qr-manager-grid">
+
+                    <!-- Create QR Form -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div class="section-title">📲 Tạo mã QR thanh toán</div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="qr-form">
+                                <div class="form-group">
+                                    <label>Ngân hàng <span style="color:red">*</span></label>
+                                    <select id="qrBank">
+                                        <option value="">-- Chọn ngân hàng --</option>
+                                        <option value="VCB">Vietcombank (VCB)</option>
+                                        <option value="BIDV">BIDV</option>
+                                        <option value="ICB">VietinBank (ICB)</option>
+                                        <option value="VBAAGRIBANK">Agribank</option>
+                                        <option value="TCB">Techcombank (TCB)</option>
+                                        <option value="MB">MBBank (MB)</option>
+                                        <option value="TPBANK">TPBank</option>
+                                        <option value="ACB">ACB</option>
+                                        <option value="VPB">VPBank (VPB)</option>
+                                        <option value="STB">Sacombank (STB)</option>
+                                        <option value="HDB">HDBank (HDB)</option>
+                                        <option value="SHB">SHB</option>
+                                        <option value="OCB">OCB</option>
+                                        <option value="MSB">MSB</option>
+                                        <option value="SEABANK">SeABank</option>
+                                        <option value="EXIMBANK">Eximbank</option>
+                                        <option value="ABBANK">ABBank</option>
+                                        <option value="BACABANK">BacABank</option>
+                                        <option value="NAMABANK">NamABank</option>
+                                        <option value="KIENLONGBANK">Kienlongbank</option>
+                                        <option value="PVCOMBANK">PVcomBank</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Số tài khoản <span style="color:red">*</span></label>
+                                        <input type="text" id="qrAccount" placeholder="Nhập số tài khoản">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tên chủ tài khoản <span style="color:red">*</span></label>
+                                        <input type="text" id="qrAccountName" placeholder="Nhập tên chủ TK">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Số tiền (VNĐ)</label>
+                                        <input type="number" id="qrAmount" placeholder="VD: 500000" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mã hồ sơ liên kết</label>
+                                        <input type="text" id="qrFileCode" placeholder="VD: HS20240001">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nội dung thanh toán</label>
+                                    <input type="text" id="qrNote" placeholder="VD: Phi dich vu ho so HS001">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tiêu đề hiển thị trên trang chủ</label>
+                                    <input type="text" id="qrTitle" placeholder="VD: Phí dịch vụ hành chính 2024">
+                                </div>
+                                <hr class="qr-divider">
+                                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                                    <button class="btn btn-secondary" onclick="previewQR()">👁 Xem trước QR</button>
+                                    <button class="btn btn-success" onclick="publishQR()">📢 Đăng QR lên trang chủ</button>
+                                    <button class="btn btn-danger btn-sm" onclick="removeQR()">🗑 Gỡ QR khỏi trang chủ</button>
+                                </div>
+
+                                <div class="qr-preview hidden" id="qrPreviewBox">
+                                    <p style="font-size:13px;color:#888;margin-bottom:12px;">📱 Quét mã QR để thanh toán</p>
+                                    <img id="qrPreviewImg" src="" alt="QR Code">
+                                    <div class="qr-info" id="qrPreviewInfo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current QR Status -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div class="section-title">📋 Trạng thái QR hiện tại</div>
+                        </div>
+                        <div class="modal-body" id="currentQRStatus">
+                            <div style="text-align:center;padding:32px 20px;color:#aaa;">
+                                <div style="font-size:48px;margin-bottom:12px;">📭</div>
+                                <p>Chưa có QR nào đang hiển thị trên trang chủ</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- TAB: DVC Registrations -->
+            <div id="tab-dvc" style="display:none;">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title">📋 Đăng ký Dịch vụ công trực tuyến</div>
+                        <div class="section-actions">
+                            <button class="btn btn-outline btn-sm" onclick="exportDVC()">⬇ Xuất dữ liệu</button>
+                        </div>
+                    </div>
+                    <div class="filter-bar">
+                        <input type="text" class="filter-input" id="filterDVCSearch" placeholder="🔍 Tìm tên, CCCD, mã hồ sơ..." oninput="renderDVCTable()">
+                        <select class="filter-select" id="filterDVCStatus" onchange="renderDVCTable()">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="pending">Chờ xử lý</option>
+                            <option value="processing">Đang xử lý</option>
+                            <option value="done">Hoàn thành</option>
+                            <option value="rejected">Từ chối</option>
+                        </select>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Mã hồ sơ</th>
+                                    <th>Họ và tên</th>
+                                    <th>CCCD</th>
+                                    <th>Điện thoại</th>
+                                    <th>Dịch vụ</th>
+                                    <th>Ngày nộp</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dVCTable"><tr><td colspan="9" class="empty-table"><div class="empty-icon">📭</div><p>Chưa có hồ sơ nào</p></td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="dvcPagination"></div>
+                </div>
+            </div>
+
+            <!-- TAB: NhaDat Registrations -->
+            <div id="tab-nhadat" style="display:none;">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title">🏠 Đăng ký Thủ tục nhà đất</div>
+                        <div class="section-actions">
+                            <button class="btn btn-outline btn-sm" onclick="exportNhaDat()">⬇ Xuất dữ liệu</button>
+                        </div>
+                    </div>
+                    <div class="filter-bar">
+                        <input type="text" class="filter-input" id="filterNhaDatSearch" placeholder="🔍 Tìm tên, CCCD, mã hồ sơ..." oninput="renderNhaDatTable()">
+                        <select class="filter-select" id="filterNhaDatStatus" onchange="renderNhaDatTable()">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="pending">Chờ xử lý</option>
+                            <option value="processing">Đang xử lý</option>
+                            <option value="done">Hoàn thành</option>
+                            <option value="rejected">Từ chối</option>
+                        </select>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Mã hồ sơ</th>
+                                    <th>Người nộp</th>
+                                    <th>CCCD</th>
+                                    <th>Điện thoại</th>
+                                    <th>Lĩnh vực</th>
+                                    <th>Ngày nộp</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nhaDatTable"><tr><td colspan="9" class="empty-table"><div class="empty-icon">📭</div><p>Chưa có hồ sơ nào</p></td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="nhadatPagination"></div>
+                </div>
+            </div>
+
+            <!-- TAB: USER MANAGEMENT -->
+            <div id="tab-users" style="display:none;">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title">👥 Quản lý người dùng</div>
+                        <div class="section-actions">
+                            <button class="btn btn-primary btn-sm" onclick="openUserModal()">➕ Thêm người dùng</button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên đăng nhập</th>
+                                    <th>Họ và tên</th>
+                                    <th>Email</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Vai trò</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable">
+                                <tr><td colspan="8" class="empty-table"><div class="empty-icon">👥</div><p>Đang tải...</p></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: CHAT SUPPORT -->
+            <div id="tab-chat" style="display:none;">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fa fa-commenting"></i> Hỗ trợ trực tuyến</div>
+                        <div class="section-actions">
+                            <button class="btn btn-outline btn-sm" id="chatSoundBtn" onclick="toggleChatSound()"><i class="fa fa-bell"></i> Âm thanh</button>
+                            <button class="btn btn-outline btn-sm" onclick="refreshChat()"><i class="fa fa-refresh"></i> Làm mới</button>
+                            <button class="btn btn-danger btn-sm" onclick="clearChat()"><i class="fa fa-trash"></i> Xóa tất cả</button>
+                        </div>
+                    </div>
+                    <div class="chat-layout">
+                        <div class="chat-session-list" id="chatSessionList">
+                            <div class="chat-session-search">
+                                <input type="text" placeholder="Tìm kiếm..." oninput="filterSessions(this.value)">
+                            </div>
+                            <div class="chat-session-items" id="chatSessionItems"></div>
+                        </div>
+                        <div class="chat-container" id="chatContainer">
+                            <div class="chat-header">
+                                <span id="chatHeaderTitle"><i class="fa fa-comments"></i> <strong>Chọn hội thoại</strong></span>
+                                <span class="chat-badge" id="chatBadge">0 tin nhắn mới</span>
+                            </div>
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="chat-empty">Chọn một hội thoại bên trái để bắt đầu</div>
+                            </div>
+                            <div class="chat-input-area" id="chatInputArea" style="display:none;">
+                                <input type="text" class="chat-input" id="chatInput" placeholder="Nhập tin nhắn trả lời..." onkeydown="if(event.key==='Enter') sendChatReply()">
+                                <label class="chat-file-btn" title="Đính kèm file" id="chatFileLabel">
+                                    <input type="file" id="chatFileInput" accept="image/*,video/*,.pdf,.doc,.docx" style="display:none" onchange="sendChatFile(this)">
+                                    <i class="fa fa-paperclip"></i>
+                                </label>
+                                <button class="btn btn-primary" onclick="sendChatReply()">Gửi</button>
+                            </div>
+                            <div class="chat-preview" id="chatFilePreview" style="display:none">
+                                <span id="chatFilePreviewName"></span>
+                                <button onclick="clearChatFile()">✕</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end content-area -->
+    </div><!-- end main-content -->
+</div><!-- end admin-layout -->
+
+<!-- TOAST -->
+<div class="admin-toast" id="adminToast"></div>
+
+<!-- MODAL: Profile Detail -->
+<div class="modal-overlay" id="modalDetail">
+    <div class="modal-box xl">
+        <div class="modal-head">
+            <h3 id="modalDetailTitle">📄 Chi tiết hồ sơ</h3>
+            <button class="modal-close-btn" onclick="closeModal('modalDetail')">✕</button>
+        </div>
+        <div class="modal-body" id="modalDetailBody"></div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('modalDetail')">Đóng</button>
+            <button class="btn btn-secondary" id="btnGenerateQR" onclick="openQRFromProfile()">📲 Tạo QR thanh toán</button>
+            <button class="btn btn-primary" id="btnSaveDetail" onclick="saveProfileDetail()">💾 Lưu thay đổi</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: Delete Confirm -->
+<div class="modal-overlay" id="modalDelete">
+    <div class="modal-box md">
+        <div class="modal-head">
+            <h3>⚠️ Xác nhận xóa hồ sơ</h3>
+            <button class="modal-close-btn" onclick="closeModal('modalDelete')">✕</button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size:14px;color:#555;">Bạn có chắc chắn muốn xóa hồ sơ <strong id="deleteProfileName"></strong>? Hành động này không thể hoàn tác.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('modalDelete')">Hủy</button>
+            <button class="btn btn-danger" id="btnConfirmDelete" onclick="confirmDelete()">🗑 Xóa hồ sơ</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: User Form -->
+<div class="modal-overlay" id="modalUser">
+    <div class="modal-box md">
+        <div class="modal-head">
+            <h3 id="userModalTitle">👤 Thêm người dùng</h3>
+            <button class="modal-close-btn" onclick="closeModal('modalUser')">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="user-form">
+                <input type="hidden" id="editUserId" value="">
+                <div class="form-group">
+                    <label>Tên đăng nhập <span style="color:red">*</span></label>
+                    <input type="text" id="userUsername" class="form-input" placeholder="Nhập tên đăng nhập">
+                </div>
+                <div class="form-group">
+                    <label>Họ và tên <span style="color:red">*</span></label>
+                    <input type="text" id="userFullName" class="form-input" placeholder="Nhập họ và tên">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Mật khẩu <span id="pwdRequired" style="color:red">*</span></label>
+                        <input type="password" id="userPassword" class="form-input" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="form-group">
+                        <label>Vai trò</label>
+                        <select id="userRole" class="form-input">
+                            <option value="user">Người dùng</option>
+                            <option value="admin">Quản trị viên</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="userEmail" class="form-input" placeholder="Nhập email">
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" id="userPhone" class="form-input" placeholder="Nhập số điện thoại">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('modalUser')">Hủy</button>
+            <button class="btn btn-primary" onclick="saveUser()">💾 Lưu</button>
+        </div>
+    </div>
+</div>
+
+<script src="api-adapter.js?v=20260704.2"></script>
+<script src="admin-script.js?v=20260705.1"></script>
+</body>
+</html>

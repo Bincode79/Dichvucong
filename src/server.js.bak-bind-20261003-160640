@@ -1,0 +1,77 @@
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const { greet, guide, showServices, getServiceDetails, runService } = require('./index');
+
+const appointmentsRouter = require('./routes/appointments');
+const provincesRouter = require('./routes/provinces');
+const adminRouter = require('./routes/admin');
+const dichvucongRouter = require('./routes/dichvucong');
+const nhadatRouter = require('./routes/nhadat');
+const chatRouter = require('./routes/chat');
+const qrRouter = require('./routes/qr');
+const userRouter = require('./routes/user');
+const searchRouter = require('./routes/search');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public')));
+
+app.get('/api/greet', (req, res) => {
+  try { res.json({ message: greet() }); }
+  catch (err) { res.status(500).json({ status: 'thất bại', error: err.message }); }
+});
+
+app.get('/api/guide', (req, res) => {
+  try { res.json({ message: guide() }); }
+  catch (err) { res.status(500).json({ status: 'thất bại', error: err.message }); }
+});
+
+app.get('/api/services', (req, res) => {
+  try { res.json({ services: showServices() }); }
+  catch (err) { res.status(500).json({ status: 'thất bại', error: err.message }); }
+});
+
+app.get('/api/services/:id', (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ status: 'thất bại', error: 'ID dịch vụ không hợp lệ' });
+    res.json({ service: getServiceDetails(id) });
+  } catch (err) { res.status(500).json({ status: 'thất bại', error: err.message }); }
+});
+
+app.post('/api/services/:id/run', (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ status: 'thất bại', error: 'ID dịch vụ không hợp lệ' });
+    res.json(runService(id));
+  } catch (err) { res.status(500).json({ status: 'thất bại', error: err.message }); }
+});
+
+app.use('/api/appointments', appointmentsRouter);
+app.use('/api/provinces', provincesRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/dichvucong', dichvucongRouter);
+app.use('/api/nhadat', nhadatRouter);
+app.use('/api/chat', chatRouter);
+app.use('/api/qr', qrRouter);
+app.use('/api/user', userRouter);
+app.use('/api/search', searchRouter);
+
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) {
+    res.status(404).json({ status: 'thất bại', error: 'Đường dẫn không tồn tại' });
+  }
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ status: 'thất bại', error: 'Lỗi hệ thống' });
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Dịch vụ công đang chạy tại http://localhost:${PORT}`);
+});

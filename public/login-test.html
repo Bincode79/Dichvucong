@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Login Test</title></head>
+<body>
+  <h2>Test đăng nhập</h2>
+  <form id="loginForm">
+    <p><input type="text" id="username" placeholder="Username" value="admin"></p>
+    <p><input type="password" id="password" placeholder="Password" value="admin@2024"></p>
+    <p><button type="button" id="loginBtn" style="padding:10px 20px;font-size:16px;cursor:pointer;">Đăng nhập</button></p>
+  </form>
+  <pre id="result" style="background:#f5f5f5;padding:10px;margin-top:10px;"></pre>
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', async function() {
+      const result = document.getElementById('result');
+      result.textContent = 'Đang đăng nhập...';
+      try {
+        const res = await fetch('/api/user/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+          })
+        });
+        const data = await res.json();
+        result.textContent = JSON.stringify(data, null, 2);
+      } catch(e) {
+        result.textContent = 'Lỗi: ' + e.message;
+      }
+    });
+  </script>
+</body>
+</html>

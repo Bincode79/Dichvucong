@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch vụ công trực tuyến - Cổng Dịch vụ công quốc gia</title>
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); padding: 32px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #CE7A58; padding: 16px 0 12px; border-bottom: 2px solid #CE7A58; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .service-item { border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px 20px; transition: all 0.2s; cursor: pointer; display: flex; align-items: center; gap: 16px; }
+        .service-item:hover { border-color: #CE7A58; box-shadow: 0 4px 16px rgba(206,122,88,0.12); transform: translateY(-1px); }
+        .service-icon { width: 48px; height: 48px; border-radius: 10px; background: #fef3e9; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 22px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .btn-apply { background: #CE7A58; color: #fff; border: none; border-radius: 6px; padding: 8px 20px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s; white-space: nowrap; }
+        .btn-apply:hover { background: #B8694A; }
+        @media (max-width: 768px) { .card { padding: 16px; } }
+    </style>
+</head>
+<body>
+<div class="header-bar bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex items-center justify-between min-h-[64px]">
+            <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e2f41" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span class="text-sm font-medium text-gray-600">Quay lại</span>
+            </div>
+            <span class="font-bold text-sm md:text-base text-[#1e2f41]">CỔNG DỊCH VỤ CÔNG QUỐC GIA</span>
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-5xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-extrabold text-[#1e2f41] mb-2">DỊCH VỤ CÔNG TRỰC TUYẾN</h1>
+    <p class="text-sm text-gray-500 mb-6">Danh sách các dịch vụ công trực tuyến thuộc thẩm quyền giải quyết</p>
+
+    <div class="flex flex-wrap gap-3 mb-6">
+        <button class="px-4 py-2 rounded-full text-sm font-semibold bg-[#CE7A58] text-white border-none cursor-pointer" onclick="filterServices('all')">Tất cả</button>
+        <button class="px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 border border-gray-300 cursor-pointer hover:border-[#CE7A58]" onclick="filterServices('dat-dai')">Đất đai</button>
+        <button class="px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 border border-gray-300 cursor-pointer hover:border-[#CE7A58]" onclick="filterServices('xay-dung')">Xây dựng</button>
+        <button class="px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 border border-gray-300 cursor-pointer hover:border-[#CE7A58]" onclick="filterServices('tu-phap')">Tư pháp</button>
+        <button class="px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 border border-gray-300 cursor-pointer hover:border-[#CE7A58]" onclick="filterServices('bhxh')">Bảo hiểm</button>
+    </div>
+
+    <div class="card">
+        <div class="section-title">📌 DANH SÁCH DỊCH VỤ</div>
+        <div id="serviceList" class="flex flex-col gap-3"></div>
+    </div>
+</div>
+
+<script>
+const services = [
+    { id: 1, name: 'Cấp Giấy chứng nhận quyền sử dụng đất lần đầu', category: 'dat-dai', icon: '🏗️', desc: 'Đăng ký cấp GCN QSDĐ lần đầu cho hộ gia đình, cá nhân' },
+    { id: 2, name: 'Đăng ký biến động đất đai', category: 'dat-dai', icon: '📝', desc: 'Đăng ký thay đổi quyền sử dụng đất, tài sản gắn liền với đất' },
+    { id: 3, name: 'Cấp giấy phép xây dựng nhà ở riêng lẻ', category: 'xay-dung', icon: '🏠', desc: 'Xin cấp giấy phép xây dựng cho nhà ở riêng lẻ' },
+    { id: 4, name: 'Cấp giấy phép xây dựng công trình', category: 'xay-dung', icon: '🏢', desc: 'Xin cấp giấy phép xây dựng cho công trình, cơ sở sản xuất' },
+    { id: 5, name: 'Đăng ký khai sinh', category: 'tu-phap', icon: '👶', desc: 'Đăng ký khai sinh cho trẻ em' },
+    { id: 6, name: 'Đăng ký kết hôn', category: 'tu-phap', icon: '💑', desc: 'Đăng ký kết hôn trực tuyến' },
+    { id: 7, name: 'Đóng bảo hiểm xã hội tự nguyện', category: 'bhxh', icon: '🛡️', desc: 'Đóng BHXH tự nguyện trực tuyến' },
+    { id: 8, name: 'Tra cứu quá trình tham gia BHXH', category: 'bhxh', icon: '🔍', desc: 'Tra cứu quá trình tham gia bảo hiểm xã hội' },
+];
+
+function goHome() { window.location.href = '/'; }
+
+function renderServices(filter) {
+    const list = document.getElementById('serviceList');
+    const filtered = filter === 'all' ? services : services.filter(s => s.category === filter);
+    if (filtered.length === 0) {
+        list.innerHTML = '<div class="text-center py-10 text-gray-400">Không có dịch vụ nào</div>';
+        return;
+    }
+    list.innerHTML = filtered.map(s => `
+        <div class="service-item" onclick="applyService(${s.id})">
+            <div class="service-icon">${s.icon}</div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-[#1e2f41]">${s.name}</span>
+                    <span class="badge badge-blue">Toàn trình</span>
+                </div>
+                <p class="text-sm text-gray-500 mt-0.5">${s.desc}</p>
+            </div>
+            <button class="btn-apply" onclick="event.stopPropagation();applyService(${s.id})">Đăng ký</button>
+        </div>
+    `).join('');
+}
+
+function filterServices(cat) {
+    document.querySelectorAll('[onclick*="filterServices"]').forEach(b => {
+        b.className = b.textContent.trim() === document.querySelector(`[onclick="filterServices('${cat}')"]`)?.textContent?.trim()
+            ? 'px-4 py-2 rounded-full text-sm font-semibold bg-[#CE7A58] text-white border-none cursor-pointer'
+            : 'px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 border border-gray-300 cursor-pointer hover:border-[#CE7A58]';
+    });
+    renderServices(cat);
+}
+
+function applyService(id) {
+    const svc = services.find(s => s.id === id);
+    if (confirm(`Bạn muốn đăng ký dịch vụ: "${svc?.name}"?`)) {
+        window.location.href = '/dang-ky-dich-vu-cong.html';
+    }
+}
+
+renderServices('all');
+</script>
+</body>
+</html>

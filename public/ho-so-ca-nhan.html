@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ của tôi - Cổng Dịch vụ công quốc gia</title>
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); padding: 24px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #CE7A58; padding: 12px 0; border-bottom: 2px solid #CE7A58; margin-bottom: 16px; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { text-align: left; padding: 10px 8px; background: #fafafa; color: #666; font-weight: 600; font-size: 12px; text-transform: uppercase; border-bottom: 2px solid #eee; }
+        td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; }
+        tr:hover td { background: #fafafa; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+        .stat-card { background: #fff; border-radius: 10px; padding: 20px; text-align: center; border: 1px solid #eee; }
+        .stat-card .num { font-size: 28px; font-weight: 800; color: #CE7A58; }
+        .stat-card .label { font-size: 13px; color: #999; margin-top: 4px; }
+        .empty-state { text-align: center; padding: 40px 20px; color: #aaa; }
+        .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+        .btn-primary { background: #CE7A58; color: #fff; border: none; padding: 8px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-primary:hover { background: #B8603A; }
+        .btn-outline { background: #fff; color: #CE7A58; border: 1.5px solid #CE7A58; padding: 8px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-outline:hover { background: #FDF0EB; }
+        .tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+        .tab-item { padding: 10px 20px; cursor: pointer; font-weight: 600; color: #999; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+        .tab-item.active { color: #CE7A58; border-bottom-color: #CE7A58; }
+        .tab-item:hover { color: #CE7A58; }
+        .type-tag { font-size: 11px; background: #f0f0f0; padding: 2px 8px; border-radius: 10px; }
+        @media (max-width: 768px) { .card { padding: 16px; } table { font-size: 12px; } th, td { padding: 8px 4px; } }
+    </style>
+</head>
+<body>
+<div class="max-w-6xl mx-auto px-4 py-6">
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="/" class="text-[#CE7A58] hover:underline flex items-center gap-1">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Trang chủ
+                </a>
+            </div>
+            <h1 class="text-2xl font-extrabold text-[#1e2f41] mt-2">HỒ SƠ CỦA TÔI</h1>
+        </div>
+        <div class="flex items-center gap-3">
+            <span id="userDisplay" style="display:none;" class="text-sm text-gray-600">👤 <strong id="userNameDisplay"></strong></span>
+            <button class="btn-outline text-sm" onclick="window.location.href='thong-tin-tai-khoan.html'"><i class="fa fa-user"></i> Tài khoản</button>
+            <button class="btn-outline text-sm" id="loginBtn" onclick="window.location.href='dang-nhap.html?redirect=ho-so-ca-nhan.html'">Đăng nhập</button>
+            <button class="btn-primary text-sm" id="logoutBtn" style="display:none;" onclick="doLogout()"><i class="fa fa-sign-out"></i> Thoát</button>
+        </div>
+    </div>
+
+    <div id="loginPrompt" class="card text-center py-16" style="display:block;">
+        <div class="text-5xl mb-4">🔐</div>
+        <h2 class="text-xl font-bold text-[#1e2f41] mb-2">Vui lòng đăng nhập</h2>
+        <p class="text-gray-500 mb-6">Đăng nhập để xem danh sách hồ sơ của bạn</p>
+        <button class="btn-primary text-base px-8 py-3" onclick="window.location.href='dang-nhap.html?redirect=ho-so-ca-nhan.html'">Đăng nhập ngay</button>
+    </div>
+
+    <div id="mainContent" style="display:none;">
+        <div class="grid grid-cols-3 gap-4 mb-6" id="statsRow">
+            <div class="stat-card"><div class="num" id="statTotal">0</div><div class="label">Tổng hồ sơ</div></div>
+            <div class="stat-card"><div class="num" id="statPending">0</div><div class="label">Đang xử lý</div></div>
+            <div class="stat-card"><div class="num" id="statDone">0</div><div class="label">Hoàn thành</div></div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-item active" onclick="switchTab(this,'all')">Tất cả</div>
+            <div class="tab-item" onclick="switchTab(this,'appointments')">Lịch hẹn</div>
+            <div class="tab-item" onclick="switchTab(this,'dichvucong')">Dịch vụ công</div>
+            <div class="tab-item" onclick="switchTab(this,'nhadat')">Nhà đất</div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">📁 DANH SÁCH HỒ SƠ</div>
+            <div id="recordsTableWrap">
+                <div class="empty-state"><div class="icon">📭</div><p>Bạn chưa có hồ sơ nào</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const TOKEN_KEY = 'userToken';
+function getToken() { return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtDate(s) { if(!s)return'—';const d=new Date(s);return isNaN(d)?s:d.toLocaleDateString('vi-VN'); }
+function badge(s) { const m={pending:'badge-warning',processing:'badge-warning',done:'badge-success',rejected:'badge-danger'}; const t={pending:'Chờ xử lý',processing:'Đang xử lý',done:'Hoàn thành',rejected:'Từ chối'}; return `<span class="badge ${m[s]||'badge-warning'}">${t[s]||s}</span>`; }
+function typeTag(t) { const c={appointments:'#e8f5e9',dichvucong:'#fff3cd',nhadat:'#dbeafe'}; return `<span class="type-tag" style="background:${c[t]||'#f0f0f0'}">${t==='appointments'?'Lịch hẹn':t==='dichvucong'?'Dịch vụ công':'Nhà đất'}</span>`; }
+
+let allRecords = [];
+let currentFilter = 'all';
+
+function doLogout() {
+    localStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem('userData');
+    sessionStorage.removeItem('userLoggedIn');
+    window.location.reload();
+}
+
+async function init() {
+    const token = getToken();
+    if (!token) return;
+    document.getElementById('loginPrompt').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('logoutBtn').style.display = 'inline-block';
+    try {
+        const profileRes = await fetch('/api/user/profile', { headers: { 'Authorization': 'Bearer ' + token } });
+        const profileJson = await profileRes.json();
+        if (profileJson.status === 'thành công') {
+            document.getElementById('userNameDisplay').textContent = profileJson.data.fullName;
+            document.getElementById('userDisplay').style.display = 'inline';
+        }
+        const res = await fetch('/api/search/my-records', { headers: { 'Authorization': 'Bearer ' + token } });
+        const json = await res.json();
+        if (json.status === 'thành công') {
+            allRecords = json.data || [];
+            render();
+        }
+    } catch(e) { console.error(e); }
+}
+
+function render() {
+    const filtered = currentFilter === 'all' ? allRecords : allRecords.filter(r => r._source === currentFilter);
+    document.getElementById('statTotal').textContent = allRecords.length;
+    document.getElementById('statPending').textContent = allRecords.filter(r => (r.status||'pending')==='pending'||r.status==='processing').length;
+    document.getElementById('statDone').textContent = allRecords.filter(r => r.status==='done').length;
+    const wrap = document.getElementById('recordsTableWrap');
+    if (filtered.length === 0) {
+        wrap.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>Không có hồ sơ nào</p></div>';
+        return;
+    }
+    let html = `<table><thead><tr><th>#</th><th>Mã hồ sơ</th><th>Loại</th><th>Người nộp</th><th>Ngày nộp</th><th>Trạng thái</th><th>Ghi chú</th></tr></thead><tbody>`;
+    filtered.forEach((p, i) => {
+        html += `<tr onclick="window.location.href='tra-cuu-chi-tiet.html?source=${encodeURIComponent(p._source)}&id=${encodeURIComponent(p.id)}'" style="cursor:pointer;">
+            <td style="color:#aaa;">${i+1}</td>
+            <td><code style="background:#f5f5f5;padding:2px 6px;border-radius:4px;font-size:12px;">${esc(p.id)}</code></td>
+            <td>${typeTag(p._source)}</td>
+            <td><strong>${esc(p.fullName || p.applicantName || '—')}</strong></td>
+            <td>${fmtDate(p.createdAt)}</td>
+            <td>${badge(p.status)}</td>
+            <td style="color:#999;font-size:12px;">${esc(p.adminNote || '')}</td>
+        </tr>`;
+    });
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+}
+
+function switchTab(el, filter) {
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    currentFilter = filter;
+    render();
+}
+init();
+</script>
+</body>
+</html>

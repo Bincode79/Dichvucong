@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - Cổng Dịch vụ công quốc gia</title>
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #eef0f4; color: #1a202c; }
+        select, input[type="text"], input[type="date"], input[type="tel"], input[type="email"], input[type="number"], textarea {
+            border: 1.5px solid #cbd5e0;
+            padding: 10px 14px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff;
+            box-sizing: border-box;
+        }
+        select:focus, input:focus, textarea:focus { border-color: #1a56db; box-shadow: 0 0 0 3px rgba(26,86,219,0.12); }
+        textarea { resize: vertical; min-height: 80px; }
+        .section-title { font-size: 15px; font-weight: 700; color: #1e3a5f; padding: 14px 0 10px; border-bottom: 2px solid #1a56db; margin-bottom: 20px; letter-spacing: 0.3px; text-transform: uppercase; }
+        .form-label { font-size: 13px; font-weight: 600; color: #2d3748; margin-bottom: 4px; display: block; }
+        .required::after { content: " *"; color: #e53e3e; }
+        .btn-nop { border: 1px solid #4a5568; border-radius: 6px; padding: 10px 18px; cursor: pointer; transition: all 0.2s; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; background: #4a5568; color: #fff; }
+        .btn-nop:hover { background: #2d3748; border-color: #2d3748; }
+        .btn-luu { background: #d4a843; border: none; border-radius: 6px; padding: 10px 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; gap: 8px; color: #1a202c; }
+        .btn-luu:hover { background: #c59a35; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(212,168,67,0.35); }
+        .btn-luu:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 9999; display: none; align-items: center; justify-content: center; }
+        .loading-box { background: #fff; padding: 24px 36px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); font-size: 16px; font-weight: 600; color: #1a202c; }
+        .alert { padding: 14px 18px; border-radius: 8px; font-size: 14px; display: none; margin-bottom: 20px; }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
+        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
+        .checkbox-label { font-size: 14px; color: #4a5568; cursor: pointer; line-height: 1.5; }
+        .card-form { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04); padding: 28px 32px; border: 1px solid #e2e8f0; }
+        .header-bar { background: #fff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
+        @media (max-width: 768px) {
+            .action-bar { flex-wrap: wrap; }
+            .card-form { padding: 16px; border-radius: 0; border-left: none; border-right: none; }
+            .header-bar { position: relative; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">Đang xử lý...</div>
+</div>
+
+<!-- HEADER -->
+<div class="header-bar">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-row justify-between items-center min-h-[72px] h-auto md:h-[72px] gap-3 py-3 md:py-0">
+            <div class="flex items-center gap-4">
+                <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a202c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    <span class="hidden md:inline text-sm font-medium text-gray-600">Quay lại</span>
+                </div>
+                <div class="w-px h-8 bg-gray-200 hidden md:block"></div>
+                <img src="/p/home/img/header/quoc_huy.png" alt="Quốc huy" class="hidden md:block" style="height:32px;">
+                <span class="font-bold text-sm md:text-base" style="color:#1a202c;">CỔNG DỊCH VỤ CÔNG QUỐC GIA</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <img src="/p/home/img/header/logo_dvc.png" alt="DVC" style="height:32px;" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="max-w-5xl mx-auto px-4 py-6">
+    <div id="alertBox" class="alert"></div>
+
+    <!-- Title -->
+    <div class="mb-6">
+        <h1 class="text-xl md:text-2xl font-extrabold" style="color:#1a202c;">HỆ THỐNG THÔNG TIN GIẢI QUYẾT THỦ TỤC HÀNH CHÍNH</h1>
+        <p class="text-sm text-gray-500 mt-1">Vui lòng điền đầy đủ thông tin vào các mục bên dưới</p>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="card-form">
+        <form id="dvcForm" onsubmit="return false;">
+
+    <!-- THÔNG TIN CHUNG -->
+    <div class="mb-8">
+        <div class="section-title">I. THÔNG TIN CHUNG</div>
+
+        <!-- Mã hồ sơ -->
+        <div class="mb-6" style="background:linear-gradient(to right,#f8faff,#f0f4ff);border:1px solid #d0d8e8;border-left:4px solid #1a56db;border-radius:6px;padding:16px 20px;">
+            <div style="display:flex;align-items:center;gap:14px;">
+                <div>
+                    <span style="font-size:13px;font-weight:600;color:#2b6cb0;text-transform:uppercase;letter-spacing:0.3px;">Mã hồ sơ</span>
+                    <div id="displayProfileCode" style="font-size:24px;font-weight:800;color:#1a202c;letter-spacing:1.5px;font-family:'Courier New',Courier,monospace;margin-top:2px;"><script>(function(){var d=new Date(),y=d.getFullYear().toString().slice(-2),m=String(d.getMonth()+1).padStart(2,'0'),da=String(d.getDate()).padStart(2,'0'),s=String(Math.floor(Math.random()*90000)+10000);document.write('DVC-'+y+m+da+'-'+s)})()</script></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label class="form-label required">Đơn vị tiếp nhận</label>
+                <select id="receivingUnit" required>
+                    <option value="">Chọn đơn vị tiếp nhận</option>
+                    <option value="ubnd">Ủy ban nhân dân</option>
+                    <option value="so-tnmt">Sở Tài nguyên và Môi trường</option>
+                    <option value="so-xd">Sở Xây dựng</option>
+                    <option value="so-tc">Sở Tài chính</option>
+                    <option value="so-tttt">Sở TT và Truyền thông</option>
+                    <option value="vpdk">Văn phòng Đăng ký đất đai</option>
+                    <option value="cn-vpdk">Chi nhánh VPĐKĐĐ</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label">Đơn vị hỗ trợ</label>
+                <select id="supportUnit">
+                    <option value="">Chọn đơn vị hỗ trợ</option>
+                    <option value="ubnd">Ủy ban nhân dân</option>
+                    <option value="so-tnmt">Sở Tài nguyên và Môi trường</option>
+                    <option value="so-xd">Sở Xây dựng</option>
+                    <option value="so-tc">Sở Tài chính</option>
+                    <option value="cn-so-10">Chi nhánh Số 10</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label required">Lĩnh vực</label>
+                <select id="field" required>
+                    <option value="">Chọn lĩnh vực</option>
+                    <option value="dat-dai">G13-TN02: Đất đai</option>
+                    <option value="xay-dung">Xây dựng</option>
+                    <option value="tai-chinh">Tài chính</option>
+                    <option value="dan-su">Dân sự</option>
+                    <option value="doanh-nghiep">Doanh nghiệp</option>
+                </select>
+            </div>
+        </div>
+        <div class="mt-5">
+            <label class="form-label required">Thủ tục hành chính</label>
+            <select id="procedure" required>
+                <option value="">Chọn thủ tục</option>
+                <option value="cap-gcn-lan-dau">Cấp GCN QSDĐ lần đầu</option>
+                <option value="cap-lai-gcn">Cấp lại GCN QSDĐ</option>
+                <option value="cap-doi-gcn">Cấp đổi GCN QSDĐ</option>
+                <option value="chuyen-nhuong">Chuyển nhượng QSDĐ</option>
+                <option value="tang-cho">Tặng cho QSDĐ</option>
+                <option value="thua-ke">Thừa kế QSDĐ</option>
+                <option value="cap-giay-phep-xay-dung">Cấp giấy phép xây dựng</option>
+                <option value="dang-ky-bien-dong">Đăng ký biến động đất đai</option>
+                <option value="chinh-sua-cap-doi-so-moi-2026">Chỉnh sửa thông tin và cấp đổi sổ mới 2026</option>
+            </select>
+        </div>
+            <div class="mt-5">
+                <label class="form-label required">Dịch vụ công</label>
+                <select id="dvcService" required>
+                    <option value="">Chọn dịch vụ công</option>
+                    <option value="1">Cấp đổi Giấy chứng nhận quyền sử dụng đất</option>
+                    <option value="2">Đăng ký quyền sử dụng đất</option>
+                    <option value="3">Chuyển nhượng quyền sử dụng đất</option>
+                    <option value="4">Thừa kế quyền sử dụng đất</option>
+                    <option value="5">Tách thửa đất</option>
+                    <option value="6">Hợp thửa đất</option>
+                    <option value="7">Chuẩn hoá thông tin</option>
+                </select>
+            </div>
+            <div class="mt-5 p-4" style="background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;display:flex;align-items:flex-start;gap:12px;">
+                <input type="checkbox" id="vnidIntegration" class="mt-0.5 flex-shrink-0" style="width:18px;height:18px;accent-color:#1a56db;">
+                <label for="vnidIntegration" class="checkbox-label text-sm" style="color:#4a5568;">
+                    <strong style="color:#1a56db;">Tích hợp giấy tờ vào VnID</strong> — Tôi đồng ý và đề nghị cơ quan chức năng tích hợp kết quả giải quyết thủ tục hành chính này vào tài khoản định danh điện tử (VNeID) của tôi để sử dụng các tiện ích công dân số.
+                </label>
+            </div>
+            </div>
+
+            <!-- THÔNG TIN NGƯỜI NỘP HỒ SƠ -->
+            <div class="mb-8">
+                <div class="section-title">II. THÔNG TIN NGƯỜI NỘP HỒ SƠ</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="form-label required">Tên người nộp</label>
+                        <input type="text" id="fullName" required placeholder="Nhập họ và tên">
+                    </div>
+                    <div>
+                        <label class="form-label required">Ngày sinh</label>
+                        <input type="date" id="dateOfBirth" required>
+                    </div>
+                    <div>
+                        <label class="form-label required">Số CMND/CCCD</label>
+                        <input type="text" id="idNumber" required pattern="[0-9]{9,12}" placeholder="Nhập số CMND/CCCD" maxlength="12">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+                    <div>
+                        <label class="form-label">Ngày cấp</label>
+                        <input type="date" id="identityIssueDate">
+                    </div>
+                    <div>
+                        <label class="form-label">Nơi cấp</label>
+                        <input type="text" id="identityIssuePlace" placeholder="Nhập nơi cấp CMND/CCCD">
+                    </div>
+                    <div>
+                        <label class="form-label required">Số điện thoại</label>
+                        <input type="tel" id="phone" required pattern="[0-9]{10,11}" placeholder="Nhập số điện thoại" maxlength="11">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+                    <div>
+                        <label class="form-label required">Tỉnh/Thành phố</label>
+                        <select id="province" required>
+                            <option value="">Chọn tỉnh/thành phố</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label required">Địa chỉ chi tiết</label>
+                        <input type="text" id="detailAddress" required placeholder="Nhập số nhà, tên đường, phường/xã">
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 mt-5 p-3" style="background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;">
+                    <input type="checkbox" id="isAuthorized" class="mt-0.5 flex-shrink-0" style="width:18px;height:18px;accent-color:#1a56db;">
+                    <label for="isAuthorized" class="checkbox-label text-sm" style="color:#4a5568;">Người ủy quyền (Người nộp hồ sơ là người được ủy quyền)</label>
+                </div>
+            </div>
+
+            <!-- THÔNG TIN NGƯỜI SỬ DỤNG ĐẤT -->
+            <div class="mb-8">
+                <div class="section-title">III. THÔNG TIN NGƯỜI SỬ DỤNG ĐẤT, CHỦ SỞ HỮU TÀI SẢN GẮN LIỀN VỚI ĐẤT, NGƯỜI QUẢN LÝ ĐẤT</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="form-label required">Tên người sử dụng đất</label>
+                        <input type="text" id="landUserName" required placeholder="Nhập tên người sử dụng đất">
+                    </div>
+                    <div>
+                        <label class="form-label required">Địa chỉ chi tiết</label>
+                        <input type="text" id="landUserAddress" required placeholder="Nhập địa chỉ chi tiết">
+                    </div>
+                    <div>
+                        <label class="form-label required">Số điện thoại</label>
+                        <input type="tel" id="landUserPhone" required pattern="[0-9]{10,11}" placeholder="Nhập số điện thoại" maxlength="11">
+                    </div>
+                </div>
+            </div>
+
+            <!-- THÔNG TIN NGÂN HÀNG KHAI BÁO THUẾ -->
+            <div class="mb-4">
+                <div class="section-title">IV. THÔNG TIN NGÂN HÀNG KHAI BÁO THUẾ</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="form-label">Ngân hàng</label>
+                        <select id="bankName">
+                            <option value="">Chọn ngân hàng</option>
+                            <option value="Vietcombank">Vietcombank (VCB)</option>
+                            <option value="BIDV">BIDV</option>
+                            <option value="VietinBank">VietinBank</option>
+                            <option value="Agribank">Agribank</option>
+                            <option value="MB Bank">MB Bank (MBBank)</option>
+                            <option value="Techcombank">Techcombank</option>
+                            <option value="ACB">ACB</option>
+                            <option value="VPBank">VPBank</option>
+                            <option value="Sacombank">Sacombank</option>
+                            <option value="HDBank">HDBank</option>
+                            <option value="SHB">SHB</option>
+                            <option value="TPBank">TPBank</option>
+                            <option value="VIB">VIB</option>
+                            <option value="MSB">MSB</option>
+                            <option value="OCB">OCB</option>
+                            <option value="SeABank">SeABank</option>
+                            <option value="Eximbank">Eximbank</option>
+                            <option value="ABBANK">ABBank</option>
+                            <option value="BacABank">BacABank</option>
+                            <option value="NamABank">NamABank</option>
+                            <option value="PVcomBank">PVcomBank</option>
+                            <option value="Kienlongbank">Kienlongbank</option>
+                            <option value="Saigonbank">Saigonbank</option>
+                            <option value="VietBank">VietBank</option>
+                            <option value="BaoViet Bank">BaoViet Bank</option>
+                            <option value="OCEANBANK">OceanBank</option>
+                            <option value="CBBank">CBBank</option>
+                            <option value="LPBank">LPBank</option>
+                            <option value="PGBank">PGBank</option>
+                            <option value="SCB">SCB</option>
+                            <option value="VRB">VRB</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Số tài khoản</label>
+                        <input type="text" id="accountNumber" placeholder="Nhập số tài khoản">
+                    </div>
+                    <div>
+                        <label class="form-label">Chủ tài khoản</label>
+                        <input type="text" id="accountName" placeholder="Nhập tên chủ tài khoản">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Agreement -->
+    <div class="flex items-start gap-3 mt-6 p-4" style="background:#fffff0;border:1px solid #e2e8f0;border-radius:6px;">
+        <input type="checkbox" id="agreeTerms" class="mt-0.5 flex-shrink-0" style="width:18px;height:18px;accent-color:#1a56db;">
+        <label for="agreeTerms" class="checkbox-label" style="font-size:14px;color:#2d3748;">Tôi xin cam kết chịu trách nhiệm về tính pháp lý của hồ sơ và chịu trách nhiệm trước pháp luật về nội dung kê khai.</label>
+    </div>
+
+    <!-- Bottom action bar -->
+    <div class="flex justify-center md:justify-end items-center mt-6 pt-5 border-t border-gray-200">
+        <div class="flex gap-3 w-full md:w-auto action-bar">
+            <button type="button" class="btn-nop" onclick="submitForm()">
+                NỘP HỒ SƠ
+            </button>
+            <button type="submit" form="dvcForm" class="btn-luu">
+                Lưu hồ sơ
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function goHome() { window.location.href = '/'; }
+
+function showLoading() { document.getElementById('loadingOverlay').style.display = 'flex'; }
+function hideLoading() { document.getElementById('loadingOverlay').style.display = 'none'; }
+
+function showAlert(type, msg) {
+    const el = document.getElementById('alertBox');
+    el.className = 'alert alert-' + type;
+    el.textContent = msg;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => { el.style.display = 'none'; }, 6000);
+}
+
+async function loadProvinces() {
+    try {
+        const res = await fetch('/api/provinces');
+        const data = await res.json();
+        if (data.status === 'thành công' && data.data) {
+            const sel = document.getElementById('province');
+            data.data.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = p.name;
+                sel.appendChild(opt);
+            });
+        }
+    } catch(e) { console.error(e); }
+}
+
+function collectFormData() {
+    const gid = id => document.getElementById(id).value.trim();
+    const gchecked = id => document.getElementById(id).checked ? 'Có' : 'Không';
+    return {
+        fullName: gid('fullName'),
+        idNumber: gid('idNumber'),
+        dateOfBirth: gid('dateOfBirth'),
+        phone: gid('phone'),
+        agreeTerms: document.getElementById('agreeTerms').checked ? 'yes' : 'no',
+        detailAddress: gid('detailAddress'),
+        receivingUnit: gid('receivingUnit'),
+        supportUnit: gid('supportUnit'),
+        field: gid('field'),
+        procedure: gid('procedure'),
+        dvcService: gid('dvcService'),
+        identityIssueDate: gid('identityIssueDate'),
+        identityIssuePlace: gid('identityIssuePlace'),
+        province: gid('province'),
+        isAuthorized: gchecked('isAuthorized'),
+        landUserName: gid('landUserName'),
+        landUserAddress: gid('landUserAddress'),
+        landUserPhone: gid('landUserPhone'),
+        bankName: gid('bankName'),
+        accountNumber: gid('accountNumber'),
+        accountName: gid('accountName'),
+        vnidIntegration: gchecked('vnidIntegration')
+    };
+}
+
+function generateProfileCode() {
+    var d = new Date();
+    var y = d.getFullYear().toString().slice(-2);
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    var seq = String(Math.floor(Math.random() * 90000) + 10000);
+    return 'DVC-' + y + m + day + '-' + seq;
+}
+
+function updateProfileCodeDisplay() {
+    var el = document.getElementById('displayProfileCode');
+    if (el) el.textContent = generateProfileCode();
+}
+
+async function submitForm() {
+    const agree = document.getElementById('agreeTerms');
+    if (!agree.checked) {
+        showAlert('error', 'Bạn cần cam kết chịu trách nhiệm về hồ sơ');
+        agree.focus();
+        return;
+    }
+
+    const requireds = ['fullName', 'dateOfBirth', 'idNumber', 'phone', 'province', 'detailAddress',
+                        'receivingUnit', 'field', 'procedure', 'dvcService',
+                        'landUserName', 'landUserAddress', 'landUserPhone'];
+    for (const id of requireds) {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+            el.focus();
+            el.style.borderColor = '#dc2626';
+            el.style.boxShadow = '0 0 0 3px rgba(220,38,38,0.15)';
+            setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
+            showAlert('error', 'Vui lòng điền đầy đủ thông tin');
+            return;
+        }
+    }
+
+    showLoading();
+    try {
+        const data = collectFormData();
+        const res = await fetch('/api/dichvucong', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        hideLoading();
+
+        if (result.status === 'thành công') {
+            var code = generateProfileCode();
+            showAlert('success', 'Nộp hồ sơ thành công! Mã hồ sơ: ' + code + '. Cảm ơn bạn đã sử dụng dịch vụ.');
+            var codeEl = document.getElementById('displayProfileCode');
+            if (codeEl) { codeEl.textContent = code; codeEl.style.color = '#2f855a'; }
+            document.getElementById('dvcForm').reset();
+            setTimeout(function() {
+                var el = document.getElementById('displayProfileCode');
+                if (el) { el.textContent = generateProfileCode(); el.style.color = '#d4a843'; }
+            }, 100);
+            setTimeout(() => { window.location.href = '/'; }, 4000);
+        } else {
+            showAlert('error', '❌ ' + (result.error || 'Có lỗi xảy ra khi gửi hồ sơ'));
+        }
+    } catch(e) {
+        hideLoading();
+        showAlert('error', '❌ Lỗi kết nối đến máy chủ, vui lòng thử lại');
+    }
+}
+
+document.getElementById('dvcForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitForm();
+});
+
+document.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('focus', function() { this.style.borderColor = '#1a56db'; this.style.boxShadow = '0 0 0 3px rgba(26,86,219,0.12)'; });
+    el.addEventListener('blur', function() { this.style.borderColor = ''; this.style.boxShadow = ''; });
+});
+
+loadProvinces();
+</script>
+</body>
+</html>

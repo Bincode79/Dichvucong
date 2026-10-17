@@ -1,0 +1,13 @@
+node_modules/
+.env
+*.log
+.aider.chat.history.md
+.aider.input.history
+.aider*
+
+# Database
+data/
+
+# Uploaded files (keep directory structure)
+public/uploads/*
+!public/uploads/.gitkeep

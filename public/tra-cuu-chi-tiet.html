@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết hồ sơ - Cổng Dịch vụ công quốc gia</title>
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); padding: 32px; margin-bottom: 20px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #CE7A58; padding: 16px 0 12px; border-bottom: 2px solid #CE7A58; margin-bottom: 20px; }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .detail-item { padding: 8px 0; }
+        .detail-item.full { grid-column: 1 / -1; }
+        .detail-label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
+        .detail-value { font-size: 14px; color: #1e2f41; font-weight: 600; }
+        .detail-value.empty { color: #bbb; font-weight: 400; font-style: italic; }
+        .badge { display: inline-block; padding: 4px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+        @media (max-width: 768px) { .card { padding: 16px; } .detail-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div class="max-w-4xl mx-auto px-4 py-6">
+    <div class="flex items-center gap-2 mb-6">
+        <a href="/dvc-tra-cuu-ho-so.html" class="text-[#CE7A58] hover:underline flex items-center gap-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Quay lại tra cứu
+        </a>
+    </div>
+    <h1 class="text-2xl font-extrabold text-[#1e2f41] mb-2" id="pageTitle">CHI TIẾT HỒ SƠ</h1>
+    <div id="detailContent">
+        <div class="card text-center py-12 text-gray-400">Đang tải...</div>
+    </div>
+</div>
+<script>
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function val(v) { return v ? esc(v) : '<span class="detail-value empty">Chưa có</span>'; }
+function row(label, value, full) { return `<div class="detail-item ${full?'full':''}"><div class="detail-label">${label}</div><div class="detail-value">${val(value)}</div></div>`; }
+function fmtDate(s) { if(!s)return'—';const d=new Date(s);return isNaN(d)?s:d.toLocaleDateString('vi-VN'); }
+function badge(s) { const m={pending:'badge-warning',processing:'badge-warning',done:'badge-success',rejected:'badge-danger'}; const t={pending:'Chờ xử lý',processing:'Đang xử lý',done:'Hoàn thành',rejected:'Từ chối'}; return `<span class="badge ${m[s]||'badge-warning'}">${t[s]||s}</span>`; }
+
+const params = new URLSearchParams(window.location.search);
+const source = params.get('source');
+const id = params.get('id');
+
+async function loadDetail() {
+    const cont = document.getElementById('detailContent');
+    if (!id) { cont.innerHTML = '<div class="card text-center py-12 text-red-500">Không có mã hồ sơ</div>'; return; }
+    try {
+        const res = await fetch('/api/search/records?maHoSo=' + encodeURIComponent(id));
+        const json = await res.json();
+        if (json.status !== 'thành công' || !json.data || json.data.length === 0) {
+            cont.innerHTML = '<div class="card text-center py-12 text-gray-500">📭 Không tìm thấy hồ sơ</div>';
+            return;
+        }
+        const p = json.data.find(x => x._source === source) || json.data[0];
+        renderDetail(cont, p);
+    } catch(e) {
+        cont.innerHTML = '<div class="card text-center py-12 text-red-500">Lỗi: ' + esc(e.message) + '</div>';
+    }
+}
+
+function renderDetail(cont, p) {
+    const fd = (() => { try { return p.formData ? JSON.parse(p.formData) : {}; } catch(e){return{};}})();
+    document.getElementById('pageTitle').textContent = 'CHI TIẾT HỒ SƠ - ' + (p.fullName || p.applicantName || '');
+    let html = `
+    <div class="card">
+        <div class="section-title">📋 THÔNG TIN HỒ SƠ</div>
+        <div class="detail-grid">
+            <div class="detail-item full"><div class="detail-label">Mã hồ sơ</div><div class="detail-value" style="font-family:monospace;font-size:16px;color:#CE7A58;">${esc(p.id)}</div></div>
+            ${row('Loại hồ sơ', p._type)}
+            ${row('Ngày nộp', fmtDate(p.createdAt))}
+            <div class="detail-item"><div class="detail-label">Trạng thái</div><div class="detail-value">${badge(p.status)}</div></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="section-title">👤 THÔNG TIN NGƯỜI NỘP</div>
+        <div class="detail-grid">
+            ${row('Họ và tên', p.fullName || p.applicantName)}
+            ${row('CCCD/CMND', p.idNumber)}
+            ${row('Điện thoại', p.phone)}
+            ${row('Email', p.email)}
+            ${row('Địa chỉ', p.address || p.detailAddress || fd.detailAddress)}
+            ${row('Tỉnh/TP', p.province || fd.province)}
+        </div>
+    </div>`;
+    if (p._source === 'appointments') {
+        html += `<div class="card"><div class="section-title">📅 LỊCH HẸN</div><div class="detail-grid">
+            ${row('Ngày hẹn', p.appointmentDate ? fmtDate(p.appointmentDate+'T00:00:00') : '')}
+            ${row('Khung giờ', p.appointmentTime)}
+            ${row('Cán bộ', p.officer)}
+            ${row('Cơ quan', p.soBanNganh)}
+            ${row('Mục đích', p.purpose, true)}
+            ${row('Ghi chú', p.notes, true)}
+        </div></div>`;
+    }
+    if (p._source === 'dichvucong') {
+        html += `<div class="card"><div class="section-title">📋 ĐĂNG KÝ DỊCH VỤ CÔNG</div><div class="detail-grid">
+            ${row('Dịch vụ', p.serviceType || fd.dvcService)}
+            ${row('Mục đích', p.purpose)}
+            ${row('Đơn vị tiếp nhận', fd.receivingUnit)}
+            ${row('Đơn vị hỗ trợ', fd.supportUnit)}
+            ${row('Lĩnh vực', fd.field)}
+            ${row('Thủ tục', fd.procedure)}
+        </div></div>`;
+    }
+    if (p._source === 'nhadat') {
+        html += `<div class="card"><div class="section-title">🏠 THỦ TỤC NHÀ ĐẤT</div><div class="detail-grid">
+            ${row('Đơn vị tiếp nhận', p.receivingUnit)}
+            ${row('Đơn vị hỗ trợ', p.supportUnit)}
+            ${row('Lĩnh vực', p.field)}
+            ${row('Thủ tục', p.procedure)}
+            ${row('Người SD đất', p.landUserName)}
+            ${row('Địa chỉ SD đất', p.landUserAddress, true)}
+        </div></div>`;
+    }
+    if (p.adminNote) {
+        html += `<div class="card"><div class="section-title">📝 GHI CHÚ XỬ LÝ</div><p style="color:#555;font-size:14px;">${esc(p.adminNote)}</p></div>`;
+    }
+    cont.innerHTML = html;
+}
+loadDetail();
+</script>
+</body>
+</html>

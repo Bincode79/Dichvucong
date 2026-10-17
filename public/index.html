@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="vi">
+    <title>Cổng Dịch vụ công quốc gia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="theme/vendor/ap8/css/style.css">
+    <link rel="stylesheet" href="styles.css?v=20260725.1">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+</head>
+
+<body>
+    <div class="overlay-common"></div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="index.html" class="logo-link">
+                        <img src="/p/home/theme/img/header/logo.png" alt="Cổng Dịch vụ công quốc gia" class="logo">
+                    </a>
+                </div>
+                <div class="nav-toggle" id="navToggle">
+                    <span class="-ap icon icon-menu"></span>
+                </div>
+                <div class="header-actions">
+                    <div class="buttons" style="display:none;">
+                        <a href="ho-so-ca-nhan.html" class="btn btn-profile">📁 Hồ sơ của tôi</a>
+                        <a href="dang-nhap.html" class="btn btn-login">Đăng nhập</a>
+                        <a href="dang-nhap.html?register=1" class="btn btn-register">Đăng ký</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav class="header-nav">
+        <div class="container">
+            <ul id="main-menu" class="pull-left menus">
+                <li class="active" id="home-page"><a href="index.html"><span class="-ap icon icon-home4"></span></a></li>
+                <li>
+                    <a href="#">Thông tin và dịch vụ</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="dvc-tra-cuu-ho-so.html">Tra cứu hồ sơ</a></li>
+                        <li><a href="ho-so-ca-nhan.html">Hồ sơ của tôi</a></li>
+                        <li><a href="thong-tin-tai-khoan.html">Tài khoản</a></li>
+                        <li><a href="#">Tòa án nhân dân</a></li>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Thanh toán trực tuyến</a></li>
+                <li>
+                    <a href="#">Phản ánh kiến nghị</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Tra cứu kết quả trả lời</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Đánh giá chất lượng phục vụ</a></li>
+                <li>
+                    <a href="#">Hỗ trợ</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#">Thông báo</a></li>
+                    </ul>
+                </li>
+                <li class="menu-auth">
+                    <div class="header-account mobile-ds">
+                        <div class="buttons">
+                            <a href="ho-so-ca-nhan.html" class="btn btn-profile">📁 Hồ sơ của tôi</a>
+                            <a href="dang-nhap.html" class="btn btn-login">Đăng nhập</a>
+                            <a href="dang-nhap.html?register=1" class="btn btn-register">Đăng ký</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="header-bottom">
+        <div class="container">
+            <ul id="list-dropdown"></ul>
+        </div>
+    </div>
+
+        <!-- Hero Banner -->
+    <div class="hero-banner">
+        <div class="container">
+            <div class="maxw991">
+                <div class="form-group">
+                    <div class="box-search -adv">
+                        <input type="text" class="form-control search-input" placeholder="Nhập từ khoá tìm kiếm" id="searchKeyWord" />
+                        <button class="btn btn-search" onclick="searchProcedure()">
+                            <span class="-ap icon-ion-ios-search-strong icon"></span>
+                        </button>
+                    </div>
+                    <div class="adv-link" data-toggle="modal" data-target="#advsearch" onclick="showAdvSearch()">Tìm kiếm nâng cao</div>
+                </div>
+                <div class="service-bars">
+                    <button onclick="goToPage('dang-ky-dich-vu-cong.html')" class="bar-item bar-primary">
+                        Dịch vụ công trực tuyến
+                    </button>
+                    <button onclick="goToPage('dvc-dich-vu-cong-truc-tuyen-ds.html?pCoQuanId=80463832')" class="bar-item bar-secondary">Dịch vụ công trực tuyến của Đảng</button>
+                    <button onclick="goToPage('https://lienthong.dichvucong.gov.vn/#/?vnconnect=1')" class="bar-item bar-secondary">Dịch vụ công liên thông: Khai sinh, Khai tử</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal search -->
+    <div class="modal" id="advsearch" data-toggle="modal">
+        <div class="popup-box" style="max-width: 471px;">
+            <div class="close -ap icon-close" id="divClosePopupSearch"></div>
+            <div class="head">
+                <div class="title">Nhập từ khoá tìm kiếm</div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Nhập từ khóa tìm kiếm" id="txtKEYWORD" autofocus="" />
+            </div>
+            <div class="title">Chọn cấp thực hiện</div>
+            <div class="list-check form-group">
+                <div class="check-action">
+                    <input type="radio" checked="" class="check" name="cap_thuc_hien" value="tinhthanhpho" id="rdoTINH_THANH" />
+                    <span class="name">Tỉnh/ Thành phố</span>
+                </div>
+                <div class="check-action">
+                    <input type="radio" class="check" name="cap_thuc_hien" value="bonganh" id="rdoBO_NGANH" />
+                    <span class="name">Bộ ngành</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="select-custom">
+                    <select name="tinh_thanh" class="form-control" id="cboTINH_THANH"></select>
+                    <select name="bo_nganh" class="form-control" id="cboBO_NGANH" style="display:none"></select>
+                </div>
+            </div>
+            <div id="popupChange" style="color: white; height: 0" height="0">_</div>
+            <div id="hide_for_bo_nganh">
+                <div class="list-check form-group">
+                    <div class="check-action">
+                        <input type="radio" checked="" class="check" value="quan/huyen" name="quan_huyen_or_so" id="rdoQUAN_HUYEN" />
+                        <span class="name">Phường/ Xã</span>
+                    </div>
+                    <div class="check-action">
+                        <input type="radio" class="check" value="so" name="quan_huyen_or_so" id="rdoSO" />
+                        <span class="name">Sở</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <select name="" id="cboQUAN_HUYEN" class="form-control"></select>
+                        <select name="" id="cboSO" class="form-control" style="display:none"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-main w100" onclick="doAdvSearch()">Tìm kiếm</button>
+            </div>
+        </div>
+    </div>
+
+        <!-- Hot News -->
+    <div class="hotnews-top">
+        <div class="container">
+            <div class="list-news" id="new_post">
+                <div class="item">
+                    <div class="wrap">
+                        <a href="#" class="post-title">CHUYỂN ĐỔI, VẬN HÀNH CHÍNH THỨC CỔNG DỊCH VỤ CÔNG QUỐC GIA TẠI TRUNG TÂM DỮ LIỆU QUỐC GIA, BỘ CÔNG AN</a>
+                        <p class="post-date">Ngày 29/05/2026</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="wrap">
+                        <a href="#" class="post-title">THÔNG BÁO VỀ VIỆC DỪNG VẬN HÀNH CỔNG DỊCH VỤ CÔNG QUỐC GIA DO VĂN PHÒNG CHÍNH PHỦ QUẢN LÝ</a>
+                        <p class="post-date">Ngày 21/04/2026</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="wrap">
+                        <a href="#" class="post-title">Công bố dữ liệu quốc gia về bảo hiểm và hướng dẫn kết nối, khai thác sử dụng dữ liệu quốc gia về bảo hiểm thay thế giấy tờ trong giải quyết thủ tục hành chính</a>
+                        <p class="post-date">Ngày 11/02/2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+        <!-- Target Groups -->
+    <div class="targetgroup-area section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="targetgroup-box -congdan">
+                        <div class="targetgroup-head">
+                            <h2 class="targetgroup-title"><a href="#">CÔNG DÂN</a></h2>
+                        </div>
+                        <div class="targetgroup-body">
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/cocon.svg?v=2" alt="" /></span>
+                                    <span class="text">Có con nhỏ</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/giaoduc.svg?v=2" alt="" /></span>
+                                    <span class="text">Học tập</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/vieclam.svg?v=2" alt="" /></span>
+                                    <span class="text">Việc làm</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/cutru.svg?v=2" alt="" /></span>
+                                    <span class="text">Cư trú và giấy tờ tùy thân</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/honnhan.svg?v=2" alt="" /></span>
+                                    <span class="text">Hôn nhân và gia đình</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/nhao.svg?v=2" alt="" /></span>
+                                    <span class="text">Điện lực, nhà ở, đất đai</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/suckhoe.svg?v=2" alt="" /></span>
+                                    <span class="text">Sức khỏe và y tế</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#" onclick="openCCCDScanner(event)">
+                                    <span class="icon">
+                                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="2" y="11" width="44" height="27" rx="4" fill="rgba(26,86,219,0.08)" stroke="#1a56db" stroke-width="2"/>
+                                            <rect x="7" y="18" width="11" height="8" rx="1.5" fill="rgba(26,86,219,0.15)" stroke="#1a56db" stroke-width="1"/>
+                                            <line x1="10" y1="18" x2="10" y2="26" stroke="#1a56db" stroke-width="0.8"/>
+                                            <line x1="13" y1="18" x2="13" y2="26" stroke="#1a56db" stroke-width="0.8"/>
+                                            <line x1="7" y1="21" x2="18" y2="21" stroke="#1a56db" stroke-width="0.8"/>
+                                            <line x1="7" y1="24" x2="18" y2="24" stroke="#1a56db" stroke-width="0.8"/>
+                                            <path d="M25 22 Q27.5 24.5 25 27" stroke="#1a56db" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                            <path d="M28 19 Q32 24.5 28 30" stroke="#1a56db" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.75"/>
+                                            <path d="M31 16 Q37 24.5 31 33" stroke="#1a56db" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.45"/>
+                                            <rect x="7" y="29" width="14" height="2" rx="1" fill="rgba(26,86,219,0.3)"/>
+                                            <rect x="7" y="33" width="10" height="2" rx="1" fill="rgba(26,86,219,0.18)"/>
+                                            <circle cx="41" cy="15" r="1.5" fill="#1a56db" opacity="0.4"/>
+                                        </svg>
+                                    </span>
+                                    <span class="text">Quét CCCD gắn Chip</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/huutri.svg?v=2" alt="" /></span>
+                                    <span class="text">Hưu trí</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/quadoi.svg?v=2" alt="" /></span>
+                                    <span class="text">Người thân qua đời</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/congdan/balance.svg?v=2" alt="" /></span>
+                                    <span class="text">Giải quyết khiếu kiện</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="targetgroup-box -doanhnghiep">
+                        <div class="targetgroup-head">
+                            <h2 class="targetgroup-title"><a href="#">DOANH NGHIỆP</a></h2>
+                        </div>
+                        <div class="targetgroup-body">
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/khoisukinhdoanh.svg?v=2" alt="" /></span>
+                                    <span class="text">Khởi sự kinh doanh</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/laodong.svg?v=2" alt="" /></span>
+                                    <span class="text">Lao động và bảo hiểm xã hội</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/taichinhdn.svg?v=2" alt="" /></span>
+                                    <span class="text">Tài chính doanh nghiệp</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/datdai.svg?v=2" alt="" /></span>
+                                    <span class="text">Điện lực, đất đai, xây dựng</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/thuongmai.svg?v=2" alt="" /></span>
+                                    <span class="text">Thương mại, quảng cáo</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/sohuutritue.svg?v=2" alt="" /></span>
+                                    <span class="text">Sở hữu trí tuệ, đăng ký tài sản</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/tlcn.svg?v=2" alt="" /></span>
+                                    <span class="text">Thành lập chi nhánh, văn phòng đại diện</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/dauthau.svg?v=2" alt="" /></span>
+                                    <span class="text">Đấu thầu, mua sắm công</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/taicautrucdn.svg?v=2" alt="" /></span>
+                                    <span class="text">Tái cấu trúc doanh nghiệp</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/balance.svg?v=2" alt="" /></span>
+                                    <span class="text">Giải quyết tranh chấp hợp đồng</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a class="wrap" href="#">
+                                    <span class="icon"><img src="/p/home/theme/img/home/doanhnghiep/tamdung.svg?v=2" alt="" /></span>
+                                    <span class="text">Tạm dừng, chấm dứt hoạt động</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="add"><p>Cơ quan chủ quản: Văn phòng Chính phủ</p></div>
+                <div class="add"><p>www.dichvucong.gov.vn</p></div>
+                <div class="add"><p>Tổng đài hỗ trợ: 18001096</p></div>
+                <div class="add"><p>Email: dichvucong@chinhphu.vn</p></div>
+                <div id="footerLinks"></div>
+            </div>
+        </div>
+    </footer>
+
+    
+
+    <div id="notification" class="notification"></div>
+
+    <!-- Chat Widget -->
+    <div id="chatWidget" class="chat-widget">
+        <button class="chat-widget-btn" id="chatToggleBtn">
+            <span id="chatIcon"><i class="fa fa-commenting"></i></span>
+            <span class="chat-notif-dot" id="chatNotifDot" style="display:none;"></span>
+        </button>
+        <div class="chat-widget-box" id="chatWidgetBox" style="display:none;">
+            <div class="chat-widget-head">
+                <span><i class="fa fa-commenting"></i> Hỗ trợ trực tuyến</span>
+                <button onclick="toggleChat()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;">✕</button>
+            </div>
+            <div class="chat-widget-name-screen" id="chatNameScreen">
+                <div class="chat-name-icon"><i class="fa fa-commenting" style="font-size:44px;"></i></div>
+                <p class="chat-name-title">Kết nối hỗ trợ</p>
+                <p class="chat-name-desc">Nhập thông tin của bạn để bắt đầu trò chuyện</p>
+                <div class="chat-name-input-wrap">
+                    <input type="text" id="chatUserNameInput" placeholder="Họ và tên..." maxlength="50">
+                </div>
+                <div class="chat-name-input-wrap" style="margin-top:4px;">
+                    <input type="tel" id="chatUserPhoneInput" placeholder="Số điện thoại..." maxlength="15">
+                </div>
+                <div class="chat-name-input-wrap" style="margin-top:8px;">
+                    <button onclick="setChatUserName()" style="width:100%;">Bắt đầu</button>
+                </div>
+            </div>
+            <div class="chat-widget-msgs" id="chatWidgetMsgs" style="display:none;">
+                <div class="chat-widget-msg system">Chào bạn! Vui lòng nhập câu hỏi để được hỗ trợ.</div>
+            </div>
+            <div class="chat-widget-input" id="chatWidgetInputArea" style="display:none;">
+                <input type="text" id="chatWidgetInput" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter') sendUserChat()">
+                <label class="chat-widget-file-btn" title="Đính kèm ảnh/video">
+                    <input type="file" id="chatWidgetFileInput" accept="image/*,video/*,.pdf" style="display:none" onchange="sendUserFile(this)">
+                    <i class="fa fa-paperclip"></i>
+                </label>
+                <button onclick="sendUserChat()">Gửi</button>
+            </div>
+            <div class="chat-widget-preview" id="chatWidgetFilePreview" style="display:none;">
+                <span id="chatWidgetFilePreviewName"></span>
+                <button onclick="clearUserFile()">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <!-- ===== CCCD SCANNER FULLSCREEN ===== -->
+    <div id="cccdModal" class="cccd-fs-overlay">
+        <div class="cccd-fs-topbar">
+            <div class="cccd-fs-topbar-left">
+                <svg width="22" height="22" viewBox="0 0 48 48" fill="none">
+                    <rect x="2" y="10" width="44" height="28" rx="5" fill="#eee"/>
+                    <rect x="7" y="17" width="11" height="8" rx="1.5" fill="rgba(26,86,219,0.2)"/>
+                    <line x1="10" y1="17" x2="10" y2="25" stroke="rgba(26,86,219,0.4)" stroke-width=".9"/>
+                    <line x1="13" y1="17" x2="13" y2="25" stroke="rgba(26,86,219,0.4)" stroke-width=".9"/>
+                    <line x1="7" y1="20" x2="18" y2="20" stroke="rgba(26,86,219,0.4)" stroke-width=".9"/>
+                    <line x1="7" y1="23" x2="18" y2="23" stroke="rgba(26,86,219,0.4)" stroke-width=".9"/>
+                    <path d="M30 72 Q34 77 30 82" stroke="rgba(26,86,219,0.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </svg>
+                <span>Quét CCCD gắn Chip</span>
+                <span class="cccd-fs-topbar-badge">NFC</span>
+            </div>
+            <div class="cccd-fs-topbar-right">
+                <button class="cccd-fs-close" onclick="closeCCCDScanner()">✕</button>
+            </div>
+        </div>
+
+        <div class="cccd-phase" id="cccdPhaseMain">
+            <!-- Illustration: phone + CCCD -->
+            <div class="cccd-illust" id="cccdIllust">
+                <svg width="220" height="160" viewBox="0 0 220 160" fill="none">
+                    <!-- Phone body -->
+                    <rect x="110" y="10" width="56" height="108" rx="8" fill="#1a202c" opacity="0.1"/>
+                    <rect x="113" y="13" width="50" height="102" rx="6" fill="#fff" stroke="#ddd" stroke-width="0.8"/>
+                    <rect x="125" y="14" width="26" height="4" rx="2" fill="#1a202c" opacity="0.08"/>
+                    <circle cx="138" cy="112" r="3" fill="#ddd"/>
+                    <!-- Phone screen content: NFC icon -->
+                    <rect x="118" y="24" width="40" height="36" rx="4" fill="rgba(26,86,219,0.05)"/>
+                    <path d="M130 32 Q126 38 126 44" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                    <path d="M136 34 Q133 39 133 44" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.6"/>
+                    <path d="M142 38 Q140 42 140 44" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.3"/>
+                    <!-- Phone screen text lines -->
+                    <rect x="120" y="64" width="36" height="3" rx="1.5" fill="#eee"/>
+                    <rect x="120" y="70" width="28" height="3" rx="1.5" fill="#eee"/>
+                    <!-- NFC waves from phone -->
+                    <path d="M102 56 Q96 56 92 60 Q88 64 88 68" stroke="#1a56db" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5">
+                        <animate attributeName="opacity" values="0.5;0.2;0.5" dur="2s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M94 52 Q86 52 80 58 Q74 64 74 70" stroke="#1a56db" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.3">
+                        <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2.4s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M86 48 Q76 48 68 56 Q60 64 60 72" stroke="#1a56db" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.2">
+                        <animate attributeName="opacity" values="0.2;0.05;0.2" dur="2.8s" repeatCount="indefinite"/>
+                    </path>
+                    <!-- CCCD card -->
+                    <g>
+                        <animateTransform attributeName="transform" type="translate" values="-20,4; 6,-6; -20,4" dur="3s" repeatCount="indefinite"/>
+                        <rect x="8" y="44" width="70" height="44" rx="4" fill="#fff" stroke="#1a56db" stroke-width="1.2" filter="url(#cccdShadow)"/>
+                        <rect x="14" y="50" width="12" height="8" rx="1" fill="rgba(26,86,219,0.1)"/>
+                        <text x="30" y="56" font-size="3" fill="#999" font-family="monospace">123 456 789</text>
+                        <rect x="14" y="62" width="24" height="2" rx="1" fill="#eee"/>
+                        <rect x="14" y="66" width="18" height="2" rx="1" fill="#eee"/>
+                        <rect x="14" y="70" width="20" height="2" rx="1" fill="#eee"/>
+                        <rect x="14" y="74" width="36" height="2" rx="1" fill="#eee"/>
+                        <!-- Chip icon on card -->
+                        <rect x="60" y="62" width="10" height="14" rx="1.5" fill="rgba(26,86,219,0.15)" stroke="#1a56db" stroke-width="0.6"/>
+                        <circle cx="65" cy="69" r="3" fill="none" stroke="#1a56db" stroke-width="0.4"/>
+                    </g>
+                    <defs>
+                        <filter id="cccdShadow">
+                            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+                        </filter>
+                    </defs>
+                </svg>
+            </div>
+
+            <!-- NFC Animation Area -->
+            <div class="cccd-nfc-area" id="cccdNfcArea">
+                <div class="cccd-nfc-circle" id="cccdNfcCircle">
+                    <svg class="cccd-nfc-icon" width="60" height="60" viewBox="0 0 48 48" fill="none">
+                        <path d="M16 10 C10 16 10 32 16 38" stroke="#1a56db" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        <path d="M22 14 C18 19 18 29 22 34" stroke="#1a56db" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
+                        <path d="M28 18 C25 22 25 26 28 30" stroke="#1a56db" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.4"/>
+                        <rect x="18" y="14" width="12" height="20" rx="3" fill="rgba(26,86,219,0.06)" stroke="#1a56db" stroke-width="1.5" opacity="0.8"/>
+                        <line x1="21" y1="18" x2="21" y2="25" stroke="#1a56db" stroke-width="1.2" opacity="0.6"/>
+                        <line x1="27" y1="18" x2="27" y2="25" stroke="#1a56db" stroke-width="1.2" opacity="0.6"/>
+                        <line x1="21" y1="28" x2="27" y2="28" stroke="#1a56db" stroke-width="1.2" opacity="0.4"/>
+                    </svg>
+                </div>
+                <!-- NFC pulse rings -->
+                <div class="cccd-pulse-ring" id="cccdPulse1"></div>
+                <div class="cccd-pulse-ring" id="cccdPulse2"></div>
+                <div class="cccd-pulse-ring" id="cccdPulse3"></div>
+            </div>
+
+            <!-- Guide text -->
+            <p class="cccd-nfc-guide" id="cccdGuideMain">Đưa thẻ CCCD vào gần thiết bị để bắt đầu</p>
+
+            <!-- Status -->
+            <p class="cccd-nfc-status" id="cccdScanStatus"></p>
+
+            <!-- Chip detected banner -->
+            <div class="cccd-chip-banner" id="cccdChipBanner">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:5px;"><path d="M9 3v18M3 9h18M3 15h18M15 3v18M21 9v6M3 9v6" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round"/></svg>
+                Đã phát hiện chip NFC
+            </div>
+
+            <!-- Progress indicator (hidden initially) -->
+            <div class="cccd-nfc-progress" id="cccdNfcProgress" style="display:none">
+                <div class="cccd-nfc-progress-bar">
+                    <div class="cccd-nfc-progress-fill" id="cccdProgressFill"></div>
+                </div>
+                <span class="cccd-nfc-progress-text" id="cccdProgressText">0%</span>
+            </div>
+
+            <!-- Start button -->
+            <button class="cccd-btn-start" id="cccdBtnStart" onclick="cccdStartScan()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                Bắt đầu quét chip
+            </button>
+        </div>
+
+        <!-- Result overlay -->
+        <div class="cccd-phase" id="cccdPhaseResult" style="display:none">
+            <div class="cccd-result-wrap">
+                <div class="cccd-result-header">
+                    <div class="cccd-result-check">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <circle cx="20" cy="20" r="18" stroke="#27ae60" stroke-width="2.5" fill="rgba(39,174,96,0.1)"/>
+                            <path d="M11 20 L17 27 L29 13" stroke="#27ae60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="cccd-result-title">Xác thực chip thành công</p>
+                        <p class="cccd-result-subtitle">Dữ liệu CCCD đã được đọc và xác thực</p>
+                    </div>
+                </div>
+                <div class="cccd-result-body" id="cccdResultBody"></div>
+                <div class="cccd-result-footer">
+                    <p class="cccd-result-note">Tự động đóng sau</p>
+                    <span class="cccd-result-countdown" id="cccdResultCountdown">8s</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Payment Modal -->
+    <div id="qrPaymentModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+        <div style="background:#fff;border-radius:16px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.35);animation:qrFadeIn .25s ease;">
+            <div style="padding:18px 22px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#CE7A58,#B8603A);border-radius:16px 16px 0 0;">
+                <div style="color:#fff;">
+                    <div style="font-size:16px;font-weight:800;letter-spacing:0.3px;">📲 Thanh toán phí dịch vụ</div>
+                    <div id="qrModalSubtitle" style="font-size:12px;opacity:0.85;margin-top:2px;"></div>
+                </div>
+                <button onclick="closeQRModal()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;">✕</button>
+            </div>
+            <div style="padding:24px;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;justify-content:center;">
+                <div style="flex-shrink:0;text-align:center;">
+                    <div style="border:4px solid #CE7A58;border-radius:14px;padding:6px;background:#fff;box-shadow:0 6px 20px rgba(206,122,88,0.18);display:inline-block;">
+                        <img id="qrModalImg" src="" alt="QR Thanh toán" style="width:190px;height:190px;display:block;border-radius:8px;">
+                    </div>
+                    <p style="font-size:12px;color:#aaa;margin-top:10px;">📱 Quét bằng app ngân hàng</p>
+                </div>
+                <div style="flex:1;min-width:220px;">
+                    <h3 id="qrModalTitle" style="font-size:15px;font-weight:800;color:#CE7A58;margin-bottom:14px;"></h3>
+                    <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px;">
+                        <div style="display:flex;gap:8px;"><span style="color:#999;font-weight:600;min-width:130px;white-space:nowrap;">🏦 Ngân hàng:</span><span id="qrModalBank" style="color:#1E2F41;font-weight:700;"></span></div>
+                        <div style="display:flex;gap:8px;"><span style="color:#999;font-weight:600;min-width:130px;white-space:nowrap;">💳 Số tài khoản:</span><span id="qrModalAccount" style="color:#1E2F41;font-weight:700;font-family:monospace;font-size:14px;"></span></div>
+                        <div style="display:flex;gap:8px;"><span style="color:#999;font-weight:600;min-width:130px;white-space:nowrap;">👤 Chủ tài khoản:</span><span id="qrModalName" style="color:#1E2F41;font-weight:700;"></span></div>
+                        <div id="qrModalAmountRow" style="display:flex;gap:8px;"><span style="color:#999;font-weight:600;min-width:130px;white-space:nowrap;">💰 Số tiền:</span><span id="qrModalAmount" style="color:#CE7A58;font-weight:800;font-size:16px;"></span></div>
+                        <div id="qrModalNoteRow" style="display:flex;gap:8px;"><span style="color:#999;font-weight:600;min-width:130px;white-space:nowrap;">📝 Nội dung:</span><span id="qrModalNote" style="color:#1E2F41;font-weight:600;"></span></div>
+                        <div id="qrModalCodeRow" style="display:flex;gap:8px;"><span style="color:#999;font-weight:600;min-width:130px;white-space:nowrap;">📋 Mã hồ sơ:</span><span id="qrModalCode" style="color:#1E2F41;font-weight:700;font-family:monospace;background:#f5f5f5;padding:2px 8px;border-radius:6px;"></span></div>
+                    </div>
+                    <div style="margin-top:16px;background:#fff3cd;border:1px solid #f39c12;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#856404;">
+                        ⚠️ Vui lòng nhập đúng nội dung chuyển khoản để hồ sơ được xử lý nhanh chóng.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        @keyframes qrFadeIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ===== CCCD FULLSCREEN SCANNER ===== */
+        .cccd-fs-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 99999;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .cccd-fs-overlay.open { display: flex; }
+
+        /* Top bar */
+        .cccd-fs-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 18px;
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            flex-shrink: 0;
+        }
+        .cccd-fs-topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1a202c;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .cccd-fs-topbar-badge {
+            background: #1a56db;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .cccd-fs-topbar-right { display: flex; align-items: center; gap: 13px; }
+        .cccd-fs-close {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            color: #999;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .cccd-fs-close:hover { background: #1a56db; border-color: #1a56db; color:#fff; box-shadow: 0 2px 6px rgba(26,86,219,0.3); transform: translateY(-1px); }
+
+        /* Phase wrapper */
+        .cccd-phase {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            padding: 24px 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        /* ── NFC Area ── */
+        .cccd-nfc-area {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 4px;
+        }
+        .cccd-nfc-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(26,86,219,0.06);
+            border: 2px dashed rgba(26,86,219,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+        .cccd-nfc-circle.active {
+            background: rgba(26,86,219,0.1);
+            border-color: #1a56db;
+            border-style: solid;
+            box-shadow: 0 0 30px rgba(26,86,219,0.15);
+        }
+        .cccd-nfc-circle.success {
+            background: rgba(39,174,96,0.1);
+            border-color: #27ae60;
+            box-shadow: 0 0 30px rgba(39,174,96,0.15);
+        }
+        .cccd-nfc-icon {
+            display: block;
+        }
+        /* Pulse rings */
+        .cccd-pulse-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(26,86,219,0.08);
+            pointer-events: none;
+        }
+        .cccd-pulse-ring.anim {
+            animation: cccdPulseExpand 1.8s ease-out infinite;
+        }
+        .cccd-pulse-ring.anim:nth-child(2) { animation-delay: 0.6s; }
+        .cccd-pulse-ring.anim:nth-child(3) { animation-delay: 1.2s; }
+        @keyframes cccdPulseExpand {
+            0%   { width: 100px; height: 100px; opacity: 0.6; }
+            100% { width: 200px; height: 200px; opacity: 0; }
+        }
+
+        /* ── Guide text ── */
+        .cccd-nfc-guide {
+            color: #1a202c;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            margin: 0;
+            padding: 0 12px;
+            transition: all 0.3s;
+        }
+        .cccd-nfc-guide.subtle { color: #888; font-weight: 400; font-size: 14px; }
+        .cccd-nfc-guide.highlight { color: #1a56db; }
+        .cccd-nfc-guide.success { color: #27ae60; }
+
+        /* ── Status ── */
+        .cccd-nfc-status {
+            color: #aaa;
+            font-size: 13px;
+            margin: 0;
+            min-height: 20px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        .cccd-nfc-status.active { color: #1a56db; font-weight: 600; }
+        .cccd-nfc-status.success { color: #27ae60; font-weight: 600; }
+
+        /* ── Progress bar ── */
+        .cccd-nfc-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 260px;
+            max-width: 80%;
+        }
+        .cccd-nfc-progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .cccd-nfc-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #1a56db, #1a4a9e);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+        .cccd-nfc-progress-text {
+            color: #1a56db;
+            font-size: 13px;
+            font-weight: 700;
+            min-width: 36px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ── Nút Bắt đầu ── */
+        .cccd-btn-start {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 40px;
+            background: #1a56db;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 6px rgba(26,86,219,0.3);
+            transition: all 0.2s ease;
+            min-width: 220px;
+        }
+        .cccd-btn-start:hover  { background: #1a4a9e; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(26,86,219,0.4); }
+        .cccd-btn-start:active { transform: translateY(1px); box-shadow: 0 1px 3px rgba(26,86,219,0.3); }
+
+        /* ── Chip NFC đã phát hiện ── */
+        .cccd-chip-banner {
+            display: none;
+            background: rgba(26,86,219,0.06);
+            border: 1px solid rgba(26,86,219,0.2);
+            border-radius: 10px;
+            padding: 9px 16px;
+            font-size: 12.5px;
+            color: #1a56db;
+            text-align: center;
+            font-weight: 600;
+            animation: cccdBannerIn 0.35s ease;
+        }
+        .cccd-chip-banner.show { display: block; }
+        @keyframes cccdBannerIn {
+            from { opacity:0; transform:translateY(-6px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        /* ── Illustration phone + CCCD ── */
+        .cccd-illust {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .cccd-illust.hide {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* ── Màn hình kết quả ── */
+        .cccd-result-wrap {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            animation: cccdResultIn 0.45s cubic-bezier(0.22,1,0.36,1);
+        }
+        @keyframes cccdResultIn {
+            from { opacity:0; transform:translateY(24px) scale(0.97); }
+            to   { opacity:1; transform:translateY(0) scale(1); }
+        }
+        .cccd-result-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, rgba(39,174,96,0.08), rgba(39,174,96,0.03));
+            border: 1px solid rgba(39,174,96,0.2);
+            border-radius: 14px 14px 0 0;
+        }
+        .cccd-result-check { flex-shrink:0; }
+        .cccd-result-title {
+            color: #27ae60; font-size:15px; font-weight:800; margin:0; letter-spacing:0.2px;
+        }
+        .cccd-result-subtitle {
+            color: #999; font-size:11px; margin:4px 0 0;
+        }
+        .cccd-result-body {
+            background: #fff;
+            border: 1px solid #eee;
+            border-top: none;
+            padding: 4px 0;
+        }
+        .cccd-rf {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            padding: 9px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        .cccd-rf:last-child { border-bottom: none; }
+        .cccd-rf-label {
+            flex-shrink: 0;
+            width: 115px;
+            color: #aaa;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .cccd-rf-val {
+            flex: 1;
+            color: #1a202c;
+            font-size: 13px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+        .cccd-rf-val.mono { font-family:monospace; letter-spacing:1px; color:#1a56db; font-size:13.5px; }
+        .cccd-result-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-top: none;
+            border-radius: 0 0 14px 14px;
+        }
+        .cccd-result-note {
+            color: #aaa;
+            font-size: 11.5px;
+            margin: 0;
+        }
+        .cccd-result-countdown {
+            color: #1a56db;
+            font-size: 12px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        /* Fade out animation */
+        .cccd-fade-out {
+            animation: cccdFadeOutAll 0.65s ease forwards;
+        }
+        @keyframes cccdFadeOutAll {
+            from { opacity:1; }
+            to   { opacity:0; }
+        }
+
+        /* ===== QR PAYMENT MODAL MOBILE ===== */
+        @media (max-width: 600px) {
+            #qrPaymentModal { padding: 0 !important; align-items: flex-end !important; }
+            #qrPaymentModal > div {
+                border-radius: 18px 18px 0 0 !important;
+                max-height: 96vh !important;
+                max-width: 100% !important;
+            }
+            #qrPaymentModal > div > div:nth-child(2) {
+                flex-direction: column !important;
+                padding: 16px !important;
+                gap: 16px !important;
+            }
+            #qrPaymentModal img { width: 140px !important; height: 140px !important; }
+        }
+        @media (max-width: 480px) {
+            #qrPaymentModal > div > div:nth-child(2) > div:nth-child(2) > div {
+                flex-direction: column !important;
+                gap: 2px !important;
+            }
+            #qrPaymentModal span[style*="min-width:130px"],
+            #qrPaymentModal span[style*="min-width: 130px"] {
+                min-width: auto !important;
+                white-space: normal !important;
+            }
+        }
+    </style>
+
+    </script>
+    <script src="cccd-scanner.js"></script>
+    <script src="api-adapter.js"></script>
+    <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var token = sessionStorage.getItem('userToken') || localStorage.getItem('userToken');
+        var userData = null;
+        try { userData = JSON.parse(sessionStorage.getItem('userData')); } catch(e) {}
+        var role = userData ? userData.role : null;
+        var isAdmin = role === 'admin';
+
+        document.querySelectorAll('.header-actions .buttons').forEach(function(el) {
+            if (token && userData) {
+                var html = '<a href="ho-so-ca-nhan.html" class="btn btn-profile">📁 Hồ sơ của tôi</a> <a href="thong-tin-tai-khoan.html" class="btn btn-register">Tài khoản</a> <a href="javascript:void(0)" onclick="doLogout()" class="btn" style="background:#f5f5f5;color:#c0392b;border-color:#c0392b;">Đăng xuất</a>';
+                if (isAdmin) {
+                    html += ' <a href="admin.html" class="btn btn-login" style="background:#B8603A;border-color:#B8603A;">⚙ Admin</a>';
+                }
+                el.innerHTML = html;
+            }
+            el.style.display = ''; el.style.removeProperty('display');
+        });
+        document.querySelectorAll('.header-account.mobile-ds').forEach(function(el) {
+            el.style.display = ''; el.style.removeProperty('display');
+        });
+
+        var footerEl = document.getElementById('footerLinks');
+        if (footerEl) {
+            var footerHtml = '<div><a href="ho-so-ca-nhan.html" style="color:rgba(255,255,255,0.7)">Hồ sơ của tôi</a> | <a href="thong-tin-tai-khoan.html" style="color:rgba(255,255,255,0.7)">Tài khoản</a>';
+            if (isAdmin) {
+                footerHtml += ' | <a href="admin.html" class="admin-footer-link" style="color:rgba(255,255,255,0.7)">Quản trị hệ thống</a>';
+            }
+            footerHtml += '</div>';
+            footerEl.innerHTML = footerHtml;
+        }
+    });
+    function doLogout() {
+        localStorage.removeItem('userToken');
+        sessionStorage.removeItem('userToken');
+        sessionStorage.removeItem('userData');
+        sessionStorage.removeItem('userLoggedIn');
+        window.location.reload();
+    }
+    </script>
+    <script>
+        // ===== QR Payment Modal =====
+        var _qrConfig = null;
+        (function initQR() {
+            fetch('/api/qr/published').then(function(r){return r.json()}).then(function(j){
+                _qrConfig = j.qrCode;
+                if (_qrConfig) {
+                    var bank = _qrConfig.bank;
+                    var acc = _qrConfig.accountNumber;
+                    var name = _qrConfig.accountName;
+                    _qrConfig.url = 'https://img.vietqr.io/image/' + bank + '-' + acc + '-compact2.png?accountName=' + encodeURIComponent(name) + (_qrConfig.amount ? '&amount=' + _qrConfig.amount : '') + (_qrConfig.note ? '&addInfo=' + encodeURIComponent(_qrConfig.note) : '');
+                    var badge = document.getElementById('qrBadge');
+                    if (badge) badge.style.display = 'inline-block';
+                }
+            }).catch(function(){});
+        })();
+
+        function openQRModal(e) {
+            if (e) e.preventDefault();
+            if (!_qrConfig) return;
+            var c = _qrConfig;
+            document.getElementById('qrModalImg').src = c.url || '';
+            document.getElementById('qrModalTitle').textContent = c.title || 'Thông tin thanh toán';
+            document.getElementById('qrModalSubtitle').textContent = c.fileCode ? 'Hồ sơ: ' + c.fileCode : 'Dịch vụ công trực tuyến';
+            document.getElementById('qrModalBank').textContent = c.bank || '—';
+            document.getElementById('qrModalAccount').textContent = c.accountNumber || '—';
+            document.getElementById('qrModalName').textContent = c.accountName || '—';
+            var amtRow = document.getElementById('qrModalAmountRow');
+            if (c.amount) { document.getElementById('qrModalAmount').textContent = parseInt(c.amount).toLocaleString('vi-VN') + ' VNĐ'; amtRow.style.display = 'flex'; }
+            else { amtRow.style.display = 'none'; }
+            var noteRow = document.getElementById('qrModalNoteRow');
+            if (c.note) { document.getElementById('qrModalNote').textContent = c.note; noteRow.style.display = 'flex'; }
+            else { noteRow.style.display = 'none'; }
+            var codeRow = document.getElementById('qrModalCodeRow');
+            if (c.fileCode) { document.getElementById('qrModalCode').textContent = c.fileCode; codeRow.style.display = 'flex'; }
+            else { codeRow.style.display = 'none'; }
+            var modal = document.getElementById('qrPaymentModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var closeBtn = document.getElementById('divClosePopupSearch');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    document.getElementById('advsearch').style.display = 'none';
+                    document.body.style.overflow = '';
+                    var overlay = document.querySelector('.overlay-common');
+                    if (overlay) overlay.classList.remove('show');
+                });
+            }
+        });
+        function closeQRModal() {
+            document.getElementById('qrPaymentModal').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('qrPaymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closeQRModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeQRModal();
+        });
+
+        // ===== Chat Widget =====
+        var _chatUserName = localStorage.getItem('chatUserName') || '';
+        var _chatUserPhone = localStorage.getItem('chatUserPhone') || '';
+        var _chatSessionId = localStorage.getItem('chatSessionId') || '';
+        if (!_chatSessionId) {
+            _chatSessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+            localStorage.setItem('chatSessionId', _chatSessionId);
+        }
+        function getChatSender() { return _chatUserName ? 'user:' + _chatUserName : 'user'; }
+        function getChatUserPhone() { return _chatUserPhone; }
+        function getChatSessionId() { return _chatSessionId; }
+        function toggleChat() {
+            var box = document.getElementById('chatWidgetBox');
+            if (!box) return;
+            var isOpen = box.style.display !== 'none';
+            box.style.display = isOpen ? 'none' : 'flex';
+            if (!isOpen) {
+                if (_chatUserName) { showChatMessages(); loadChatMessages(); }
+            }
+        }
+        function setChatUserName() {
+            var nameInput = document.getElementById('chatUserNameInput');
+            var phoneInput = document.getElementById('chatUserPhoneInput');
+            var name = nameInput.value.trim();
+            var phone = phoneInput.value.trim();
+            if (!name) { nameInput.focus(); return; }
+            if (!phone) { phoneInput.focus(); return; }
+            _chatUserName = name;
+            _chatUserPhone = phone;
+            localStorage.setItem('chatUserName', name);
+            localStorage.setItem('chatUserPhone', phone);
+            showChatMessages();
+            loadChatMessages();
+        }
+        function showChatMessages() {
+            document.getElementById('chatNameScreen').style.display = 'none';
+            document.getElementById('chatWidgetMsgs').style.display = 'flex';
+            document.getElementById('chatWidgetInputArea').style.display = 'flex';
+        }
+        function fmtTime(dateStr) {
+            var d = new Date(dateStr);
+            var h = d.getHours().toString().padStart(2,'0');
+            var m = d.getMinutes().toString().padStart(2,'0');
+            return h + ':' + m;
+        }
+        function renderChatFile(m) {
+            if (!m.fileUrl) return '';
+            var fileHtml = '<div class="chat-msg-file">';
+            if (m.fileType === 'image') {
+                fileHtml += '<img src="' + m.fileUrl + '" alt="' + escHtml(m.fileName || '') + '" loading="lazy" onclick="window.open(this.src)">';
+            } else if (m.fileType === 'video') {
+                fileHtml += '<video controls preload="metadata"><source src="' + m.fileUrl + '" type="video/mp4">' + escHtml(m.fileName || '') + '</video>';
+            } else {
+                var icon = m.fileType === 'pdf' ? '<i class="fa fa-file-pdf-o"></i>' : '<i class="fa fa-paperclip"></i>';
+                fileHtml += '<a href="' + m.fileUrl + '" target="_blank" download>' + icon + ' ' + escHtml(m.fileName || 'Tải file') + '</a>';
+            }
+            return fileHtml + '</div>';
+        }
+        function loadChatMessages() {
+            fetch('/api/chat/?sessionId=' + encodeURIComponent(getChatSessionId())).then(function(r){return r.json()}).then(function(j){
+                var msgs = j.messages || [];
+                var container = document.getElementById('chatWidgetMsgs');
+                if (msgs.length === 0) {
+                    container.innerHTML = '<div class="chat-widget-msg system">Chào bạn! Vui lòng nhập câu hỏi để được hỗ trợ.</div>';
+                    return;
+                }
+                container.innerHTML = msgs.map(function(m){
+                    var isAdmin = m.sender === 'admin';
+                    var isUser = m.sender === 'user' || (m.sender && m.sender.startsWith('user:'));
+                    var cls = isAdmin ? 'admin' : (isUser ? 'user' : '');
+                    var senderName = '';
+                    if (isAdmin) { senderName = '<span class="msg-sender">Admin</span>'; }
+                    else if (isUser && m.sender && m.sender.startsWith('user:')) {
+                        var phoneTxt = m.userPhone ? ' &middot; ' + escHtml(m.userPhone) : '';
+                        senderName = '<span class="msg-sender">' + escHtml(m.sender.substring(5)) + phoneTxt + '</span>';
+                    }
+                    var timeStr = m.createdAt ? fmtTime(m.createdAt) : '';
+                    var msgTxt = m.message ? escHtml(m.message) : '';
+                    return '<div class="chat-widget-msg ' + cls + '">' + senderName + msgTxt + renderChatFile(m) + '<span class="msg-time">' + timeStr + '</span></div>';
+                }).join('');
+                container.scrollTop = container.scrollHeight;
+                msgs.filter(function(m){ return !m.isRead && m.sender === 'admin'; }).forEach(function(m){
+                    fetch('/api/chat/' + m.id + '/read', { method:'PATCH' });
+                });
+                var notifDot = document.getElementById('chatNotifDot');
+                var unreadAdmin = msgs.filter(function(m){ return !m.isRead && m.sender === 'admin'; }).length;
+                if (notifDot) notifDot.style.display = unreadAdmin > 0 ? 'block' : 'none';
+            }).catch(function(){});
+        }
+        var pendingUserFile = null;
+        function sendUserChat() {
+            var input = document.getElementById('chatWidgetInput');
+            var msg = input.value.trim();
+            if (!msg && !pendingUserFile) return;
+            var body = { sender: getChatSender(), message: msg || '', userPhone: getChatUserPhone(), sessionId: getChatSessionId() };
+            if (pendingUserFile) {
+                body.fileUrl = pendingUserFile.fileUrl;
+                body.fileType = pendingUserFile.fileType;
+                body.fileName = pendingUserFile.fileName;
+            }
+            fetch('/api/chat/', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(body)
+            }).then(function(){
+                input.value = '';
+                clearUserFile();
+                loadChatMessages();
+            }).catch(function(){});
+        }
+        function sendUserFile(input) {
+            var file = input.files[0];
+            if (!file) return;
+            if (file.size > 52428800) { alert('File quá lớn! Tối đa 50MB.'); input.value = ''; return; }
+            var fd = new FormData();
+            fd.append('file', file);
+            fetch('/api/chat/upload', { method:'POST', body:fd }).then(function(r){return r.json()}).then(function(j){
+                if (j.status === 'ok') {
+                    pendingUserFile = j.data;
+                    var preview = document.getElementById('chatWidgetFilePreview');
+                    var nameSpan = document.getElementById('chatWidgetFilePreviewName');
+                    if (preview && nameSpan) { nameSpan.innerHTML = '<i class="fa fa-paperclip"></i> ' + file.name; preview.style.display = 'flex'; }
+                    input.value = '';
+                } else { alert('Lỗi upload!'); }
+            }).catch(function(){ alert('Lỗi upload file!'); });
+        }
+        function clearUserFile() {
+            pendingUserFile = null;
+            var preview = document.getElementById('chatWidgetFilePreview');
+            if (preview) preview.style.display = 'none';
+            var fileInput = document.getElementById('chatWidgetFileInput');
+            if (fileInput) fileInput.value = '';
+        }
+        function escHtml(s) {
+            return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+        // Restore name from localStorage
+        document.addEventListener('DOMContentLoaded', function(){
+            if (_chatUserName) { document.getElementById('chatUserNameInput').value = _chatUserName; }
+            if (_chatUserPhone) { document.getElementById('chatUserPhoneInput').value = _chatUserPhone; }
+        });
+        // Auto-poll for new messages when chat is open
+        setInterval(function(){
+            var box = document.getElementById('chatWidgetBox');
+            if (box && box.style.display !== 'none' && _chatUserName) loadChatMessages();
+        }, 5000);
+
+        // Drag chat bubble
+        (function(){
+            var widget = document.getElementById('chatWidget');
+            var btn = document.getElementById('chatToggleBtn');
+            if (!widget || !btn) return;
+            var startX, startY, startBtnLeft, startBtnTop;
+            function onStart(e) {
+                var touch = e.touches ? e.touches[0] : e;
+                startX = touch.clientX;
+                startY = touch.clientY;
+                var br = btn.getBoundingClientRect();
+                startBtnLeft = br.left;
+                startBtnTop = br.top;
+                widget.style.left = br.left + 'px';
+                widget.style.top = br.top + 'px';
+                widget.style.bottom = 'auto';
+                widget.style.right = 'auto';
+            }
+            function onMove(e) {
+                var touch = e.touches ? e.touches[0] : e;
+                if (!touch) return;
+                var dx = touch.clientX - startX;
+                var dy = touch.clientY - startY;
+                if (Math.abs(dx) <= 5 && Math.abs(dy) <= 5) return;
+                e.preventDefault();
+                var newLeft = Math.max(0, Math.min(window.innerWidth - btn.offsetWidth, startBtnLeft + dx));
+                var newTop = Math.max(0, Math.min(window.innerHeight - btn.offsetHeight, startBtnTop + dy));
+                widget.style.left = newLeft + 'px';
+                widget.style.top = newTop + 'px';
+            }
+            function onClick(e) {
+                var dx = (e.clientX || 0) - startX;
+                var dy = (e.clientY || 0) - startY;
+                if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
+                toggleChat();
+            }
+            btn.addEventListener('mousedown', onStart);
+            btn.addEventListener('touchstart', onStart, {passive:true});
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('touchmove', onMove, {passive:false});
+            btn.addEventListener('click', onClick);
+        })();
+    </script>
+    <script>
+                document.addEventListener('DOMContentLoaded', function () {
+            var newsList = document.getElementById('new_post');
+            if (newsList && typeof jQuery !== 'undefined' && jQuery.fn.slick) {
+                jQuery('#new_post').slick({
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    prevArrow: '<button class=\"slick-prev\">\u2039</button>',
+                    nextArrow: '<button class=\"slick-next\">\u203a</button>',
+                    dots: true,
+                    responsive: [
+                        { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+                        { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+                        { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }
+                    ]
+                });
+            }
+        });</script>
+    <script>
+        function showLoading() { document.getElementById('loading-all') && (document.getElementById('loading-all').style.display = 'block'); }
+        function hideLoading() { document.getElementById('loading-all') && (document.getElementById('loading-all').style.display = 'none'); }
+        function goToPage(url) { window.location.href = url; }
+        function goToPage_blank(url) { window.open(url, '_blank', 'noopener,noreferrer'); }
+        function showAdvSearch() {
+            var modal = document.getElementById('advsearch');
+            var overlay = document.querySelector('.overlay-common');
+            if (modal) { modal.style.display = 'block'; document.body.style.overflow = 'hidden'; }
+            if (overlay) overlay.classList.add('show');
+        }
+        function searchProcedure() {
+            var input = document.getElementById('searchKeyWord');
+            if (input && input.value.trim()) {
+                showNotification('Đang tìm kiếm: ' + input.value.trim(), 'info');
+            } else {
+                showNotification('Vui lòng nhập từ khóa tìm kiếm', 'warning');
+            }
+        }
+        function doAdvSearch() {
+            showNotification('Chức năng tìm kiếm nâng cao', 'info');
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = '';
+                var overlay = document.querySelector('.overlay-common');
+                if (overlay) overlay.classList.remove('show');
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(function(m) {
+                    m.style.display = 'none'; document.body.style.overflow = '';
+                });
+                var overlay = document.querySelector('.overlay-common');
+                if (overlay) overlay.classList.remove('show');
+            }
+        });
+    </script>
+
+    <!-- Modal Thủ tục hành chính -->
+    <!-- Modal Form Đăng Ký Thủ Tục Hành Chính -->
+    <div class="modal-overlay" id="registrationFormModal" style="display: none;" aria-hidden="true" role="dialog"
+        aria-labelledby="registrationFormTitle">
+        <div class="modal-container registration-form-modal">
+            <div class="modal-header">
+                <h2 id="registrationFormTitle">📝 ĐĂNG KÝ THỦ TỤC HÀNH CHÍNH</h2>
+                <button class="modal-close" id="closeRegistrationFormModal" aria-label="Đóng">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body registration-form-body">
+                <form id="registrationForm" class="registration-form">
+                    <!-- 1. Thông Tin Chung -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">1. Thông Tin Chung</h3>
+                        <div class="form-group">
+                            <label>Đơn vị tiếp nhận hồ sơ:</label>
+                            <select name="receivingUnit" class="form-input">
+                                <option value="">-- Chọn đơn vị --</option>
+                                <option value="ubnd">Ủy ban nhân dân</option>
+                                <option value="so-tttt">Sở Thông tin & Truyền thông</option>
+                                <option value="so-tc">Sở Tài chính</option>
+                                <option value="so-tnmt">Sở Tài nguyên & Môi trường</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Đơn vị hỗ trợ xử lý:</label>
+                            <select name="supportUnit" class="form-input">
+                                <option value="">-- Chọn đơn vị --</option>
+                                <option value="ubnd">Ủy ban nhân dân</option>
+                                <option value="so-tttt">Sở Thông tin & Truyền thông</option>
+                                <option value="so-tc">Sở Tài chính</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Lĩnh vực thủ tục hành chính:</label>
+                            <select name="procedureField" class="form-input">
+                                <option value="">-- Chọn lĩnh vực --</option>
+                                <option value="dat-dai">Đất đai</option>
+                                <option value="xay-dung">Xây dựng</option>
+                                <option value="tai-chinh">Tài chính</option>
+                                <option value="dan-su">Dân sự</option>
+                                <option value="doanh-nghiep">Doanh nghiệp</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tên thủ tục:</label>
+                            <input type="text" name="procedureName" class="form-input" placeholder="Nhập tên thủ tục">
+                        </div>
+                        <div class="form-group">
+                            <label>Mã hồ sơ (nếu có):</label>
+                            <input type="text" name="fileCode" class="form-input" placeholder="Nhập mã hồ sơ">
+                        </div>
+                    </div>
+
+                    <!-- 2. Thông Tin Người Nộp Hồ Sơ -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">2. Thông Tin Người Nộp Hồ Sơ</h3>
+                        <div class="form-group">
+                            <label>Họ và tên: <span class="required">*</span></label>
+                            <input type="text" name="fullName" class="form-input" required
+                                placeholder="Nhập họ và tên đầy đủ">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ngày sinh: <span class="required">*</span></label>
+                                <input type="date" name="birthDate" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Giới tính: <span class="required">*</span></label>
+                                <select name="gender" class="form-input" required>
+                                    <option value="">-- Chọn --</option>
+                                    <option value="nam">Nam</option>
+                                    <option value="nu">Nữ</option>
+                                    <option value="khac">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Số CMND/CCCD/Hộ chiếu: <span class="required">*</span></label>
+                            <input type="text" name="idNumber" class="form-input" required
+                                placeholder="Nhập số CMND/CCCD/Hộ chiếu">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ngày cấp: <span class="required">*</span></label>
+                                <input type="date" name="issueDate" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Nơi cấp: <span class="required">*</span></label>
+                                <input type="text" name="issuePlace" class="form-input" required
+                                    placeholder="Nhập nơi cấp">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Số điện thoại liên hệ: <span class="required">*</span></label>
+                                <input type="tel" name="phone" class="form-input" required
+                                    placeholder="Nhập số điện thoại">
+                            </div>
+                            <div class="form-group">
+                                <label>Email (khuyến nghị):</label>
+                                <input type="email" name="email" class="form-input" placeholder="Nhập email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ thường trú (thêm mới): <span class="required">*</span></label>
+                            <textarea name="permanentAddress" class="form-input" rows="2" required
+                                placeholder="Nhập địa chỉ thường trú đầy đủ"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ tạm trú (thêm mới):</label>
+                            <textarea name="temporaryAddress" class="form-input" rows="2"
+                                placeholder="Nhập địa chỉ tạm trú (nếu có)"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Đối tượng đăng ký: <span class="required">*</span></label>
+                            <select name="registrationType" class="form-input" required>
+                                <option value="">-- Chọn --</option>
+                                <option value="ca-nhan">Cá nhân</option>
+                                <option value="to-chuc">Tổ chức</option>
+                                <option value="doanh-nghiep">Doanh nghiệp</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 3. Thông Tin Người Được Ủy Quyền -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">3. Thông Tin Người Được Ủy Quyền (nếu có)</h3>
+                        <div class="form-group">
+                            <label>Họ và tên người ủy quyền:</label>
+                            <input type="text" name="authorizedPersonName" class="form-input"
+                                placeholder="Nhập họ và tên người ủy quyền">
+                        </div>
+                        <div class="form-group">
+                            <label>Số CMND/CCCD:</label>
+                            <input type="text" name="authorizedPersonId" class="form-input"
+                                placeholder="Nhập số CMND/CCCD">
+                        </div>
+                        <div class="form-group">
+                            <label>Quan hệ với người nộp hồ sơ:</label>
+                            <select name="relationship" class="form-input">
+                                <option value="">-- Chọn quan hệ --</option>
+                                <option value="vo-chong">Vợ/Chồng</option>
+                                <option value="cha-me">Cha/Mẹ</option>
+                                <option value="con">Con</option>
+                                <option value="anh-chi-em">Anh/Chị/Em</option>
+                                <option value="khac">Khác</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Thông tin liên hệ:</label>
+                            <input type="text" name="authorizedPersonContact" class="form-input"
+                                placeholder="Nhập số điện thoại hoặc email">
+                        </div>
+                    </div>
+
+                    <!-- 4. Thông Tin Thửa Đất / Tài Sản Liên Quan -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">4. Thông Tin Thửa Đất / Tài Sản Liên Quan</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Số thửa đất:</label>
+                                <input type="text" name="plotNumber" class="form-input" placeholder="Nhập số thửa đất">
+                            </div>
+                            <div class="form-group">
+                                <label>Tờ bản đồ số:</label>
+                                <input type="text" name="mapSheetNumber" class="form-input"
+                                    placeholder="Nhập tờ bản đồ số">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ thửa đất:</label>
+                            <textarea name="plotAddress" class="form-input" rows="2"
+                                placeholder="Nhập địa chỉ thửa đất đầy đủ"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Diện tích (m²):</label>
+                                <input type="number" name="area" class="form-input" step="0.01"
+                                    placeholder="Nhập diện tích">
+                            </div>
+                            <div class="form-group">
+                                <label>Loại đất:</label>
+                                <select name="landType" class="form-input">
+                                    <option value="">-- Chọn loại đất --</option>
+                                    <option value="dat-o">Đất ở</option>
+                                    <option value="dat-sx">Đất sản xuất</option>
+                                    <option value="dat-lm">Đất lâm nghiệp</option>
+                                    <option value="dat-nn">Đất nông nghiệp</option>
+                                    <option value="dat-khac">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mục đích sử dụng:</label>
+                            <input type="text" name="usagePurpose" class="form-input"
+                                placeholder="Nhập mục đích sử dụng">
+                        </div>
+                        <div class="form-group">
+                            <label>Giấy tờ pháp lý liên quan đất đai (đã thêm mới):</label>
+                            <div class="file-upload-area">
+                                <input type="file" name="legalDocuments[]" class="file-input" multiple
+                                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                                <div class="file-upload-text">Kéo thả file vào đây hoặc click để chọn (PDF, JPG, PNG,
+                                    DOC, DOCX)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Sổ đỏ / Sổ hồng (Số phát hành – Số vào sổ):</label>
+                            <input type="text" name="redBookNumber" class="form-input"
+                                placeholder="Nhập số phát hành – số vào sổ">
+                        </div>
+                        <div class="form-group">
+                            <label>Hợp đồng chuyển nhượng / tặng cho / thừa kế: (tùy chọn tải lên)</label>
+                            <input type="file" name="contractDocuments[]" class="file-input" multiple
+                                accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Giấy phép xây dựng (nếu có):</label>
+                            <input type="file" name="constructionPermit[]" class="file-input" multiple
+                                accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Biên bản bàn giao / Quyết định giao đất (nếu có):</label>
+                            <input type="file" name="handoverDocuments[]" class="file-input" multiple
+                                accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Tài liệu đính kèm khác: Upload nhiều file</label>
+                            <input type="file" name="otherDocuments[]" class="file-input" multiple
+                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                        </div>
+                    </div>
+
+                    <!-- 5. Thông Tin Ngân Hàng -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">5. Thông Tin Ngân Hàng (Nếu có liên quan đến nghĩa vụ tài chính)
+                        </h3>
+                        <div class="form-group">
+                            <label>Tên ngân hàng:</label>
+                            <select name="bankName" id="bankName" class="form-input">
+                                <option value="">-- Chọn Ngân Hàng --</option>
+                                <option value="Vietcombank">Vietcombank (Ngân hàng Ngoại thương Việt Nam)</option>
+                                <option value="BIDV">BIDV (Ngân hàng Đầu tư và Phát triển Việt Nam)</option>
+                                <option value="VietinBank">VietinBank (Ngân hàng Công thương Việt Nam)</option>
+                                <option value="Agribank">Agribank (Ngân hàng Nông nghiệp và Phát triển Nông thôn)
+                                </option>
+                                <option value="ACB">ACB (Ngân hàng Á Châu)</option>
+                                <option value="Techcombank">Techcombank (Ngân hàng Kỹ thương Việt Nam)</option>
+                                <option value="VPBank">VPBank (Ngân hàng Việt Nam Thịnh Vượng)</option>
+                                <option value="MBBank">MBBank (Ngân hàng Quân đội)</option>
+                                <option value="TPBank">TPBank (Ngân hàng Tiên Phong)</option>
+                                <option value="Sacombank">Sacombank (Ngân hàng Sài Gòn Thương Tín)</option>
+                                <option value="HDBank">HDBank (Ngân hàng Phát triển Thành phố Hồ Chí Minh)</option>
+                                <option value="VIB">VIB (Ngân hàng Quốc tế Việt Nam)</option>
+                                <option value="SHB">SHB (Ngân hàng Sài Gòn - Hà Nội)</option>
+                                <option value="Eximbank">Eximbank (Ngân hàng Xuất Nhập khẩu Việt Nam)</option>
+                                <option value="MSB">MSB (Ngân hàng Hàng Hải)</option>
+                                <option value="OCB">OCB (Ngân hàng Phương Đông)</option>
+                                <option value="SeABank">SeABank (Ngân hàng Đông Nam Á)</option>
+                                <option value="VietABank">VietABank (Ngân hàng Việt Á)</option>
+                                <option value="PGBank">PGBank (Ngân hàng Xăng dầu Petrolimex)</option>
+                                <option value="ABBank">ABBank (Ngân hàng An Bình)</option>
+                                <option value="BacABank">BacABank (Ngân hàng Bắc Á)</option>
+                                <option value="NamABank">NamABank (Ngân hàng Nam Á)</option>
+                                <option value="SCB">SCB (Ngân hàng Sài Gòn)</option>
+                                <option value="Kienlongbank">Kienlongbank (Ngân hàng Kiên Long)</option>
+                                <option value="PVcomBank">PVcomBank (Ngân hàng Đại Chúng Việt Nam)</option>
+                                <option value="PublicBank">PublicBank (Ngân hàng Public Việt Nam)</option>
+                                <option value="OceanBank">OceanBank (Ngân hàng Đại Dương)</option>
+                                <option value="NCB">NCB (Ngân hàng Quốc Dân)</option>
+                                <option value="GPBank">GPBank (Ngân hàng Dầu Khí Toàn Cầu)</option>
+                                <option value="DongABank">DongABank (Ngân hàng Đông Á)</option>
+                                <option value="LienVietPostBank">LienVietPostBank (Ngân hàng LienVietPostBank)</option>
+                                <option value="VietBank">VietBank (Ngân hàng Việt Nam Thương Tín)</option>
+                                <option value="BaoVietBank">BaoVietBank (Ngân hàng Bảo Việt)</option>
+                                <option value="SaigonBank">SaigonBank (Ngân hàng Sài Gòn Công Thương)</option>
+                                <option value="VietCapitalBank">VietCapitalBank (Ngân hàng Bản Việt)</option>
+                                <option value="IndovinaBank">IndovinaBank (Ngân hàng Indovina)</option>
+                                <option value="WooriBank">WooriBank (Ngân hàng Woori Việt Nam)</option>
+                                <option value="ShinhanBank">ShinhanBank (Ngân hàng Shinhan Việt Nam)</option>
+                                <option value="HSBC">HSBC (Ngân hàng HSBC Việt Nam)</option>
+                                <option value="StandardChartered">Standard Chartered (Ngân hàng Standard Chartered Việt
+                                    Nam)</option>
+                                <option value="ANZ">ANZ (Ngân hàng ANZ Việt Nam)</option>
+                                <option value="HongLeongBank">Hong Leong Bank (Ngân hàng Hong Leong Việt Nam)</option>
+                                <option value="UOB">UOB (Ngân hàng UOB Việt Nam)</option>
+                                <option value="CIMB">CIMB (Ngân hàng CIMB Việt Nam)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Chi nhánh:</label>
+                            <input type="text" name="bankBranch" class="form-input" placeholder="Nhập chi nhánh">
+                        </div>
+                        <div class="form-group">
+                            <label>Số tài khoản:</label>
+                            <input type="text" name="accountNumber" class="form-input" placeholder="Nhập số tài khoản">
+                        </div>
+                        <div class="form-group">
+                            <label>Tên chủ tài khoản:</label>
+                            <input type="text" name="accountHolder" class="form-input"
+                                placeholder="Nhập tên chủ tài khoản">
+                        </div>
+                    </div>
+
+                    <!-- 6. Hồ Sơ Đính Kèm -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">6. Hồ Sơ Đính Kèm</h3>
+                        <div class="form-group">
+                            <label>Ảnh CMND/CCCD (mặt trước – mặt sau): <span class="required">*</span></label>
+                            <div class="file-upload-row">
+                                <div class="file-upload-item">
+                                    <label>Mặt trước:</label>
+                                    <input type="file" name="idCardFront" class="file-input" accept=".jpg,.jpeg,.png"
+                                        required>
+                                </div>
+                                <div class="file-upload-item">
+                                    <label>Mặt sau:</label>
+                                    <input type="file" name="idCardBack" class="file-input" accept=".jpg,.jpeg,.png"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Giấy tờ ủy quyền (nếu có):</label>
+                            <input type="file" name="authorizationDocument[]" class="file-input" multiple
+                                accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Giấy tờ pháp lý đất đai (từ mục 4):</label>
+                            <input type="file" name="landLegalDocuments[]" class="file-input" multiple
+                                accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Tệp bổ sung khác:</label>
+                            <input type="file" name="additionalFiles[]" class="file-input" multiple
+                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                        </div>
+                    </div>
+
+                    <!-- 7. Cam Kết -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">7. Cam Kết</h3>
+                        <div class="commitment-box">
+                            <div class="commitment-item">
+                                <span class="check-icon">✔</span>
+                                <span>"Tôi cam kết toàn bộ thông tin và giấy tờ cung cấp là chính xác. Tôi chịu trách
+                                    nhiệm trước pháp luật về nội dung kê khai."</span>
+                            </div>
+                            <div class="commitment-item">
+                                <span class="check-icon">✔</span>
+                                <span>"Tôi đồng ý cho phép cơ quan xử lý sử dụng thông tin theo đúng phạm vi của thủ tục
+                                    hành chính."</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="agreeCommitment" required>
+                                <span>Xác nhận đồng ý cam kết <span class="required">*</span></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 8. OTP Verification -->
+                    <div class="form-section" id="otpSection" style="display: none;">
+                        <h3 class="form-section-title">Xác thực OTP</h3>
+                        <div class="otp-container">
+                            <p class="otp-info">Mã OTP đã được gửi đến số điện thoại của bạn. Vui lòng nhập mã để xác
+                                thực.</p>
+                            <div class="form-group">
+                                <label>Mã OTP: <span class="required">*</span></label>
+                                <input type="text" name="otpCode" id="otpInput" class="form-input otp-input"
+                                    maxlength="6" placeholder="Nhập mã OTP 6 số">
+                            </div>
+                            <div class="otp-actions">
+                                <button type="button" id="resendOtpBtn" class="btn-resend-otp">Gửi lại mã OTP</button>
+                                <span class="otp-timer" id="otpTimer"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Nút Thao Tác -->
+                    <div class="form-actions">
+                        <button type="button" id="saveDraftBtn" class="btn-action btn-save">Lưu hồ sơ</button>
+                        <button type="submit" id="submitFormBtn" class="btn-action btn-submit">Gửi yêu cầu xử
+                            lý</button>
+                        <button type="reset" id="resetFormBtn" class="btn-action btn-reset">Tải lại</button>
+                        <button type="button" id="printFormBtn" class="btn-action btn-print">In mẫu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

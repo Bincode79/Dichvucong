@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin tài khoản - Cổng Dịch vụ công quốc gia</title>
+    <link rel="icon" type="image/png" href="/p/home/img/header/quoc_huy.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); padding: 32px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .section-title { font-size: 16px; font-weight: 700; color: #CE7A58; padding: 12px 0; border-bottom: 2px solid #CE7A58; margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-weight: 600; font-size: 13px; color: #555; margin-bottom: 6px; }
+        .form-group input { width: 100%; padding: 10px 14px; border: 1.5px solid #d1d5db; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .form-group input:focus { border-color: #CE7A58; box-shadow: 0 0 0 3px rgba(206,122,88,0.15); }
+        .btn-primary { background: #CE7A58; color: #fff; border: none; padding: 10px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .btn-primary:hover { background: #B8603A; }
+        .btn-outline { background: #fff; color: #CE7A58; border: 1.5px solid #CE7A58; padding: 10px 28px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-outline:hover { background: #FDF0EB; }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1e2f41; color: #fff; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: none; z-index: 999; animation: fadeIn 0.3s ease; }
+        .toast.success { background: #065f46; }
+        .toast.error { background: #991b1b; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        @media (max-width: 768px) { .card { padding: 20px; } }
+    </style>
+</head>
+<body>
+<div class="max-w-4xl mx-auto px-4 py-6">
+    <div class="flex items-center justify-between mb-6 max-w-[600px] mx-auto">
+        <div class="flex items-center gap-2">
+            <a href="/ho-so-ca-nhan.html" class="text-[#CE7A58] hover:underline flex items-center gap-1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Hồ sơ của tôi
+            </a>
+        </div>
+        <button class="btn-outline text-sm" onclick="doLogout()"><i class="fa fa-sign-out"></i> Đăng xuất</button>
+    </div>
+
+    <div id="loginPrompt" class="card text-center py-16" style="max-width:400px;">
+        <div class="text-5xl mb-4">🔐</div>
+        <h2 class="text-xl font-bold text-[#1e2f41] mb-2">Vui lòng đăng nhập</h2>
+        <p class="text-gray-500 mb-6">Đăng nhập để quản lý tài khoản</p>
+        <button class="btn-primary" onclick="window.location.href='dang-nhap.html?redirect=thong-tin-tai-khoan.html'">Đăng nhập</button>
+    </div>
+
+    <div id="mainContent" style="display:none;">
+        <div class="card">
+            <div class="section-title">👤 THÔNG TIN TÀI KHOẢN</div>
+            <div class="form-group">
+                <label>Tên đăng nhập</label>
+                <input type="text" id="profileUsername" disabled style="background:#f5f5f5;color:#888;">
+            </div>
+            <div class="form-group">
+                <label>Họ và tên <span style="color:red">*</span></label>
+                <input type="text" id="profileFullName" placeholder="Nhập họ và tên">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="profileEmail" placeholder="Nhập email">
+            </div>
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="tel" id="profilePhone" placeholder="Nhập số điện thoại">
+            </div>
+            <button class="btn-primary w-full" onclick="saveProfile()">💾 Lưu thông tin</button>
+        </div>
+
+        <div class="card">
+            <div class="section-title">🔑 ĐỔI MẬT KHẨU</div>
+            <div class="form-group">
+                <label>Mật khẩu hiện tại <span style="color:red">*</span></label>
+                <input type="password" id="currentPassword" placeholder="Nhập mật khẩu hiện tại">
+            </div>
+            <div class="form-group">
+                <label>Mật khẩu mới <span style="color:red">*</span></label>
+                <input type="password" id="newPassword" placeholder="Ít nhất 6 ký tự">
+            </div>
+            <div class="form-group">
+                <label>Xác nhận mật khẩu mới <span style="color:red">*</span></label>
+                <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu mới">
+            </div>
+            <button class="btn-primary w-full" onclick="changePassword()">🔒 Đổi mật khẩu</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const TOKEN_KEY = 'userToken';
+function getToken() { return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY); }
+
+function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type;
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+function doLogout() {
+    localStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem('userData');
+    sessionStorage.removeItem('userLoggedIn');
+    window.location.reload();
+}
+
+async function loadProfile() {
+    const token = getToken();
+    if (!token) return;
+    document.getElementById('loginPrompt').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    try {
+        const res = await fetch('/api/user/profile', { headers: { 'Authorization': 'Bearer ' + token } });
+        const json = await res.json();
+        if (json.status === 'thành công') {
+            const u = json.data;
+            document.getElementById('profileUsername').value = u.username;
+            document.getElementById('profileFullName').value = u.fullName || '';
+            document.getElementById('profileEmail').value = u.email || '';
+            document.getElementById('profilePhone').value = u.phone || '';
+        } else {
+            showToast('Phiên đăng nhập hết hạn', 'error');
+            doLogout();
+        }
+    } catch(e) {
+        showToast('Lỗi kết nối', 'error');
+    }
+}
+
+async function saveProfile() {
+    const token = getToken();
+    if (!token) return;
+    const fullName = document.getElementById('profileFullName').value.trim();
+    const email = document.getElementById('profileEmail').value.trim();
+    const phone = document.getElementById('profilePhone').value.trim();
+    if (!fullName) { showToast('Họ và tên không được để trống', 'error'); return; }
+    try {
+        const res = await fetch('/api/user/profile', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({ fullName, email, phone })
+        });
+        const json = await res.json();
+        if (json.status === 'thành công') {
+            showToast('✅ Cập nhật thông tin thành công', 'success');
+        } else {
+            showToast(json.error || 'Lỗi cập nhật', 'error');
+        }
+    } catch(e) { showToast('Lỗi kết nối', 'error'); }
+}
+
+async function changePassword() {
+    const token = getToken();
+    if (!token) return;
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        showToast('Vui lòng điền đầy đủ thông tin', 'error'); return;
+    }
+    if (newPassword.length < 6) { showToast('Mật khẩu mới phải có ít nhất 6 ký tự', 'error'); return; }
+    if (newPassword !== confirmPassword) { showToast('Mật khẩu mới không khớp', 'error'); return; }
+    try {
+        const res = await fetch('/api/user/change-password', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({ currentPassword, newPassword })
+        });
+        const json = await res.json();
+        if (json.status === 'thành công') {
+            showToast('✅ Đổi mật khẩu thành công', 'success');
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        } else {
+            showToast(json.error || 'Lỗi đổi mật khẩu', 'error');
+        }
+    } catch(e) { showToast('Lỗi kết nối', 'error'); }
+}
+loadProfile();
+</script>
+</body>
+</html>
